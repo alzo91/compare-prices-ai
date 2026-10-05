@@ -1,16 +1,25 @@
-// Base color tokens from the Designer export (Designer/html/_ds).
-// Full ramps, typography, spacing and radius come with Epic 2 (Design System & Theming).
+import { base, neutral, salvia, terracota } from './palette';
+import { typography } from './typography';
+
+// Semantic tokens built from the Designer palette (see palette.ts).
 export const light = {
   colors: {
-    background: '#f5ead8', // Fundo
-    surface: '#ebddc5', // Superfície
-    text: '#201e1d', // Texto
-    textMuted: '#645c50', // neutral-700
-    accent: '#c67139', // Terracota
-    accentSoft: '#fff2eb', // accent-100
+    background: base.fundo,
+    surface: base.superficie,
+    text: base.texto,
+    textMuted: neutral[700],
+    divider: neutral[300],
+    accent: terracota.base, // Terracota
+    accentPressed: terracota[600],
+    accentSoft: terracota[100],
     onAccent: '#ffffff',
-    accent2: '#7a8a5e', // Sálvia
+    accent2: salvia.base, // Sálvia (cheapest badge)
+    accent2Soft: salvia[200],
+    accent2Strong: salvia[900],
+    onAccent2: salvia[100],
   },
+  palette: { neutral, terracota, salvia },
+  typography,
 };
 
 export type Theme = typeof light;
