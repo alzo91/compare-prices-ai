@@ -1,0 +1,11 @@
+ios/
+android/
+node_modules/
+.expo/
+dist/
+notion-board/
+Designer/
+.claude/
+.agents/
+package-lock.json
+*.md
