@@ -6,3 +6,9 @@ export type MassUnit = 'kg' | 'g' | 'mg';
 export type VolumeUnit = 'L' | 'mL' | 'm3';
 
 export type Unit = LengthUnit | MassUnit | VolumeUnit;
+
+export const BASE_UNIT: Record<MeasurementType, Unit> = {
+  length: 'm',
+  mass: 'kg',
+  volume: 'L',
+};
