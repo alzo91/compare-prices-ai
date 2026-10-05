@@ -6,6 +6,7 @@
     "@expo-google-fonts/caprasimo": "^0.4.0",
     "@expo-google-fonts/figtree": "^0.4.1",
     "@expo/ui": "~57.0.21",
+    "@types/jest": "29.5.14",
     "expo": "~57.0.26",
     "expo-constants": "~57.0.20",
     "expo-crypto": "~57.0.3",
@@ -23,6 +24,8 @@
     "expo-system-ui": "~57.0.4",
     "expo-web-browser": "~57.0.3",
     "i18next": "^26.4.2",
+    "jest": "~29.7.0",
+    "jest-expo": "~57.0.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-i18next": "^17.0.15",
@@ -51,7 +54,8 @@
     "lint": "expo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
   },
   "private": true
 }
