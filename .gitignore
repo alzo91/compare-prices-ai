@@ -49,6 +49,9 @@ package-lock.json
 # Claude Code local settings
 .claude/settings.local.json
 .claude/skills/board/*
+.claude/skills/eas-*
+.claude/skills/expo-*
+
 # Firebase / EAS credentials
 google-services.json
 GoogleService-Info.plist
