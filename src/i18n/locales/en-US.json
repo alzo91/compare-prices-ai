@@ -1,0 +1,84 @@
+{
+  "common": {
+    "appName": "Lowest Price",
+    "back": "Back",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "search": "Search"
+  },
+  "tabs": {
+    "comparisons": "Comparisons",
+    "settings": "Settings",
+    "newComparison": "New comparison"
+  },
+  "home": {
+    "title": "My comparisons",
+    "savedCount_one": "{{count}} product saved",
+    "savedCount_other": "{{count}} products saved",
+    "updatedToday": "updated today",
+    "searchPlaceholder": "Search product",
+    "best": "Best",
+    "pricesCount_one": "{{count}} price",
+    "pricesCount_other": "{{count}} prices",
+    "cheapestSummary": "price {{index}} is the cheapest · you save {{savings}}"
+  },
+  "newComparison": {
+    "title": "New comparison",
+    "editTitle": "Edit comparison",
+    "subtitle": "Compare prices of the same product",
+    "productLabel": "Product",
+    "productPlaceholder": "e.g. white rice, type 1",
+    "pricesLabel": "Prices",
+    "priceN": "Price {{index}}",
+    "pricePlaceholder": "0.00",
+    "quantityShort": "Qty.",
+    "chooseUnit": "Choose the unit for this price",
+    "addPrice": "Add price",
+    "unitHint": "Each price has its own unit — the result converts everything to the same base.",
+    "saveComparison": "Save comparison",
+    "cheapest": "Cheapest",
+    "result": "Result",
+    "resultWinner": "Price {{index}} is the cheapest — {{quantity}} for {{price}}",
+    "resultBelowSecond": "{{percent}} below the 2nd best — {{difference}} difference over {{quantity}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "comparisonSection": "Comparison",
+    "showPricePer": "Show price per",
+    "basisBase": "kg · L",
+    "basisPer100": "100 g",
+    "basisUnit": "unit",
+    "keepPriceHistory": "Keep price history",
+    "keepPriceHistoryHint": "Stores prices you've already entered",
+    "roundCents": "Round cents",
+    "roundCentsHint": "Shows {{rounded}} instead of {{exact}}",
+    "currency": "Currency",
+    "currencyBRL": "Brazilian real (R$)",
+    "currencyUSD": "US dollar ($)",
+    "language": "Language",
+    "about": "About the app",
+    "deleteAllData": "Delete all data"
+  },
+  "about": {
+    "title": "About the app",
+    "version": "version {{version}}"
+  },
+  "units": {
+    "kg": "kg",
+    "g": "g",
+    "mg": "mg",
+    "L": "L",
+    "mL": "mL",
+    "m3": "m³",
+    "m": "m",
+    "km": "km",
+    "cm": "cm",
+    "mm": "mm"
+  },
+  "languages": {
+    "pt-BR": "Português (Brasil)",
+    "en-US": "English (US)"
+  }
+}

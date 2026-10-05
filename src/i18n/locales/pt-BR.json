@@ -1,0 +1,84 @@
+{
+  "common": {
+    "appName": "Menor Preço",
+    "back": "Voltar",
+    "close": "Fechar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Apagar",
+    "search": "Buscar"
+  },
+  "tabs": {
+    "comparisons": "Comparações",
+    "settings": "Ajustes",
+    "newComparison": "Nova comparação"
+  },
+  "home": {
+    "title": "Minhas comparações",
+    "savedCount_one": "{{count}} produto salvo",
+    "savedCount_other": "{{count}} produtos salvos",
+    "updatedToday": "atualizado hoje",
+    "searchPlaceholder": "Buscar produto",
+    "best": "Melhor",
+    "pricesCount_one": "{{count}} preço",
+    "pricesCount_other": "{{count}} preços",
+    "cheapestSummary": "preço {{index}} é o mais barato · economia de {{savings}}"
+  },
+  "newComparison": {
+    "title": "Nova comparação",
+    "editTitle": "Editar comparação",
+    "subtitle": "Compare preços do mesmo produto",
+    "productLabel": "Produto",
+    "productPlaceholder": "Ex.: arroz branco tipo 1",
+    "pricesLabel": "Preços",
+    "priceN": "Preço {{index}}",
+    "pricePlaceholder": "0,00",
+    "quantityShort": "Qtd.",
+    "chooseUnit": "Escolha a unidade deste preço",
+    "addPrice": "Adicionar preço",
+    "unitHint": "Cada preço tem sua própria unidade — o resultado converte tudo para a mesma base.",
+    "saveComparison": "Salvar comparação",
+    "cheapest": "Mais barato",
+    "result": "Resultado",
+    "resultWinner": "O preço {{index}} é o mais barato — {{quantity}} por {{price}}",
+    "resultBelowSecond": "{{percent}} abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "comparisonSection": "Comparação",
+    "showPricePer": "Mostrar preço por",
+    "basisBase": "kg · L",
+    "basisPer100": "100 g",
+    "basisUnit": "unidade",
+    "keepPriceHistory": "Manter histórico de preços",
+    "keepPriceHistoryHint": "Guarda os preços já digitados",
+    "roundCents": "Arredondar centavos",
+    "roundCentsHint": "Mostra {{rounded}} em vez de {{exact}}",
+    "currency": "Moeda",
+    "currencyBRL": "Real (R$)",
+    "currencyUSD": "Dólar (US$)",
+    "language": "Idioma",
+    "about": "Sobre o app",
+    "deleteAllData": "Apagar todos os dados"
+  },
+  "about": {
+    "title": "Sobre o app",
+    "version": "versão {{version}}"
+  },
+  "units": {
+    "kg": "kg",
+    "g": "g",
+    "mg": "mg",
+    "L": "L",
+    "mL": "ml",
+    "m3": "m³",
+    "m": "m",
+    "km": "km",
+    "cm": "cm",
+    "mm": "mm"
+  },
+  "languages": {
+    "pt-BR": "Português (Brasil)",
+    "en-US": "English (US)"
+  }
+}

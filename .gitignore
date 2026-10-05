@@ -56,3 +56,5 @@ package-lock.json
 google-services.json
 GoogleService-Info.plist
 credentials.json
+extensions.json
+settings.json

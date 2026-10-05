@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-94170a47-5a77-4094-a837-e56ab1549fdb/styles.css">
+<script src="_ds/organic-94170a47-5a77-4094-a837-e56ab1549fdb/_ds_bundle.js"></script>
+<style>
+  body { background: var(--color-neutral-200); }
+  a { color: var(--color-accent-700); }
+  a:hover { color: var(--color-accent); }
+</style>
+</helmet>
+
+<section id="board" style="display:flex;flex-direction:column;gap:40px;padding:56px 64px 40px;font-family:var(--font-body);color:var(--color-text)">
+
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:820px">
+    <span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent-700)">App de comparação de preços · iOS e Android</span>
+    <h1 style="font-size:46px;margin:0">Menor Preço</h1>
+    <p style="font-size:16px;margin:0;color:var(--color-neutral-700);text-wrap:pretty">Para quem está no corredor do mercado, com uma mão. Cada preço entra com <strong>valor, quantidade e a própria unidade</strong> (kg, g, L, ml, m, cm) e o app converte tudo para a mesma base. Quatro telas: <a href="#3a">3a</a> início, <a href="#3b">3b</a> adicionar preços vazia, <a href="#3c">3c</a> preenchida com o resultado e <a href="#3d">3d</a> ajustes.</p>
+  </div>
+
+
+</section>
+
+<section id="telas-base" style="display:flex;flex-direction:column;gap:44px;padding:16px 64px 96px;font-family:var(--font-body);color:var(--color-text)">
+
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <h4 style="margin:0;font-size:19px">Telas — 3a início · 3b / 3c adicionar preços · 3d ajustes</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- ░░ HOME ░░ -->
+      <div id="3a" style="display:flex;flex-direction:column;gap:12px;width:390px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:var(--font-heading);font-size:13px;padding:5px 13px;border-radius:999px;background:var(--color-accent);color:var(--color-bg)">3a</span>
+          <span style="font-family:var(--font-heading);font-size:17px">Início</span>
+        </div>
+        <div style="width:390px;height:844px;border-radius:38px;background:var(--color-bg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px;padding:26px 22px 8px">
+            <div style="width:36px;height:36px;border-radius:999px;background:var(--color-accent);display:grid;place-items:center;flex:none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5ead8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <span style="font-family:var(--font-heading);font-size:19px">Menor Preço</span>
+            <div style="margin-left:auto;width:44px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-surface)">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#201e1d" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6h.09A1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+          </div>
+
+          <div style="padding:14px 22px 0">
+            <h2 style="font-size:31px;margin:0 0 4px">Minhas comparações</h2>
+            <p style="font-size:14px;margin:0;color:var(--color-neutral-700)">4 produtos salvos · atualizado hoje</p>
+          </div>
+
+          <div style="padding:16px 22px 0">
+            <div style="display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-divider)">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#645c50" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <span style="font-size:15px;color:var(--color-neutral-600)">Buscar produto</span>
+            </div>
+          </div>
+
+          <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:18px 22px 0">
+
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:26px;background:var(--color-surface);box-shadow:var(--shadow-sm)">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <span style="font-family:var(--font-heading);font-size:19px;line-height:1.2;flex:1">Arroz branco tipo 1</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;padding:4px 11px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-900)">Melhor</span>
+                <span style="font-family:var(--font-heading);font-size:18px">R$&nbsp;4,98<span style="font-size:13px;color:var(--color-neutral-700)">/kg</span></span>
+                <span style="font-size:13px;color:var(--color-neutral-700);margin-left:auto">5 kg · R$ 24,90</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-600)">
+                <span>5 preços</span><span>·</span><span>preço 1 é o mais barato · economia de R$ 6,40</span>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:26px;background:var(--color-surface);box-shadow:var(--shadow-sm)">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <span style="font-family:var(--font-heading);font-size:19px;line-height:1.2;flex:1">Leite integral</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;padding:4px 11px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-900)">Melhor</span>
+                <span style="font-family:var(--font-heading);font-size:18px">R$&nbsp;4,49<span style="font-size:13px;color:var(--color-neutral-700)">/L</span></span>
+                <span style="font-size:13px;color:var(--color-neutral-700);margin-left:auto">1 L · R$ 4,49</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-600)">
+                <span>3 preços</span><span>·</span><span>caixa de 1 L</span>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:26px;background:var(--color-surface);box-shadow:var(--shadow-sm)">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <span style="font-family:var(--font-heading);font-size:19px;line-height:1.2;flex:1">Café torrado e moído</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;padding:4px 11px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-900)">Melhor</span>
+                <span style="font-family:var(--font-heading);font-size:18px">R$&nbsp;31,90<span style="font-size:13px;color:var(--color-neutral-700)">/kg</span></span>
+                <span style="font-size:13px;color:var(--color-neutral-700);margin-left:auto">500 g · R$ 15,95</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-600)">
+                <span>6 preços</span><span>·</span><span>pacotes de 250 g e 500 g</span>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:26px;background:var(--color-surface);box-shadow:var(--shadow-sm);opacity:0.55">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <span style="font-family:var(--font-heading);font-size:19px;line-height:1.2;flex:1">Detergente líquido</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;padding:4px 11px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-900)">Melhor</span>
+                <span style="font-family:var(--font-heading);font-size:18px">R$&nbsp;12,40<span style="font-size:13px;color:var(--color-neutral-700)">/L</span></span>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ showBottomNav }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;padding:4px 14px 20px;gap:4px">
+              <div style="flex:1;height:56px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:var(--color-accent-100)">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8c491a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg>
+                <span style="font-size:11px;color:var(--color-accent-800)">Comparações</span>
+              </div>
+              <div style="flex:1;height:56px;display:flex;align-items:center;justify-content:center">
+                <div style="width:54px;height:54px;border-radius:999px;background:var(--color-accent);display:grid;place-items:center;box-shadow:var(--shadow-md)">
+                  <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#f5ead8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                </div>
+              </div>
+              <div style="flex:1;height:56px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#645c50" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>
+                <span style="font-size:11px;color:var(--color-neutral-700)">Ajustes</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <span style="font-size:13px;color:var(--color-neutral-700)">Início — minhas comparações</span>
+      </div>
+
+      <div id="3b" style="display:flex;flex-direction:column;gap:12px;width:390px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:var(--font-heading);font-size:13px;padding:5px 13px;border-radius:999px;background:var(--color-neutral-300);color:var(--color-neutral-900)">3b</span>
+          <span style="font-family:var(--font-heading);font-size:16px">Ao abrir</span>
+        </div>
+        <div style="position:relative;width:390px;border-radius:38px;background:var(--color-bg);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;padding-bottom:26px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:12px;padding:26px 22px 10px">
+            <div style="width:44px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-surface);flex:none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#201e1d" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+            </div>
+            <span style="font-family:var(--font-heading);font-size:20px">Nova comparação</span>
+          </div>
+  
+          <div style="display:flex;flex-direction:column;gap:20px;padding:14px 22px 0">
+            <h2 style="font-size:28px;margin:0;text-wrap:pretty">Compare preços do mesmo produto</h2>
+  
+            <div>
+              <span style="display:block;font-size:12px;margin-bottom:7px;color:var(--color-neutral-700)">Produto</span>
+              <div style="height:56px;display:flex;align-items:center;padding:0 18px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-accent);font-size:17px;color:var(--color-neutral-600)">Ex.: arroz branco tipo 1</div>
+            </div>
+  
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);padding-left:4px">Preços</span>
+  
+              <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:26px;background:var(--color-surface)">
+                <span style="font-size:12px;color:var(--color-neutral-700)">Preço 1</span>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1.25;height:56px;display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-accent)">
+                    <span style="font-size:15px;color:var(--color-neutral-700)">R$</span>
+                    <span style="font-family:var(--font-heading);font-size:22px;color:var(--color-neutral-500)">0,00</span>
+                  </div>
+                  <div style="flex:1;height:56px;display:flex;align-items:center;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-family:var(--font-heading);font-size:22px;color:var(--color-neutral-500)">Qtd.</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px">
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);font-family:var(--font-heading);font-size:15px">kg</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">g</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">L</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">ml</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">m</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">cm</div>
+                </div>
+              </div>
+  
+              <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:26px;background:var(--color-surface)">
+                <span style="font-size:12px;color:var(--color-neutral-700)">Preço 2</span>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1.25;height:56px;display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-size:15px;color:var(--color-neutral-700)">R$</span>
+                    <span style="font-family:var(--font-heading);font-size:22px;color:var(--color-neutral-500)">0,00</span>
+                  </div>
+                  <div style="flex:1;height:56px;display:flex;align-items:center;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-family:var(--font-heading);font-size:22px;color:var(--color-neutral-500)">Qtd.</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px">
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">kg</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">g</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">L</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">ml</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">m</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">cm</div>
+                </div>
+                <span style="font-size:12px;color:var(--color-accent-700);padding-left:4px">Escolha a unidade deste preço</span>
+              </div>
+  
+              <div style="display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:999px;border:1.5px dashed var(--color-neutral-400);font-family:var(--font-heading);font-size:15px;color:var(--color-neutral-800)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#474238" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Adicionar preço
+              </div>
+            </div>
+  
+            <span style="font-size:13px;color:var(--color-neutral-700);text-align:center;text-wrap:pretty">Cada preço tem sua própria unidade — o resultado converte tudo para a mesma base.</span>
+  
+            <div style="height:58px;border-radius:999px;display:grid;place-items:center;background:var(--color-neutral-300);color:var(--color-neutral-600);font-family:var(--font-heading);font-size:17px">Salvar comparação</div>
+          </div>
+  
+        </div>
+        <p style="font-size:13px;margin:0;color:var(--color-neutral-700);text-wrap:pretty">Já nasce com dois campos de preço, cada um com seu seletor de unidade — a unidade é obrigatória por preço, então 500 g e 5 kg convivem na mesma comparação.</p>
+      </div>
+  
+      <!-- preenchido com resultado -->
+      <div id="3c" style="display:flex;flex-direction:column;gap:12px;width:390px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:var(--font-heading);font-size:13px;padding:5px 13px;border-radius:999px;background:var(--color-accent-2-700);color:#f0fae1">3c</span>
+          <span style="font-family:var(--font-heading);font-size:16px">Três preços preenchidos</span>
+        </div>
+        <div style="position:relative;width:390px;border-radius:38px;background:var(--color-bg);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;padding-bottom:26px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:12px;padding:26px 22px 10px">
+            <div style="width:44px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-surface);flex:none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#201e1d" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+            </div>
+            <span style="font-family:var(--font-heading);font-size:20px">Nova comparação</span>
+          </div>
+  
+          <div style="display:flex;flex-direction:column;gap:18px;padding:14px 22px 0">
+            <div>
+              <span style="display:block;font-size:12px;margin-bottom:7px;color:var(--color-neutral-700)">Produto</span>
+              <div style="height:56px;display:flex;align-items:center;padding:0 18px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-divider);font-size:17px">Arroz branco tipo 1</div>
+            </div>
+  
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);padding-left:4px">Preços</span>
+  
+              <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:26px;background:var(--color-accent-2-200)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:12px;color:var(--color-accent-2-900)">Preço 1</span>
+                  <span style="font-size:11px;padding:4px 11px;border-radius:999px;background:var(--color-accent-2-700);color:#f0fae1;margin-left:auto">Mais barato</span>
+                  <span style="font-family:var(--font-heading);font-size:16px;color:var(--color-accent-2-900)">R$ 4,98/kg</span>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1.25;height:56px;display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-size:15px;color:var(--color-neutral-700)">R$</span>
+                    <span style="font-family:var(--font-heading);font-size:22px">24,90</span>
+                  </div>
+                  <div style="flex:1;height:56px;display:flex;align-items:center;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-family:var(--font-heading);font-size:22px">5</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px">
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent-2-700);color:#f0fae1;font-family:var(--font-heading);font-size:15px">kg</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">g</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">L</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">ml</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">m</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">cm</div>
+                </div>
+              </div>
+  
+              <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:26px;background:var(--color-surface)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:12px;color:var(--color-neutral-700)">Preço 2</span>
+                  <span style="font-family:var(--font-heading);font-size:16px;margin-left:auto">R$ 6,10/kg</span>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1.25;height:56px;display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-size:15px;color:var(--color-neutral-700)">R$</span>
+                    <span style="font-family:var(--font-heading);font-size:22px">12,20</span>
+                  </div>
+                  <div style="flex:1;height:56px;display:flex;align-items:center;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-family:var(--font-heading);font-size:22px">2</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px">
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);font-family:var(--font-heading);font-size:15px">kg</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">g</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">L</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">ml</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">m</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">cm</div>
+                </div>
+              </div>
+  
+              <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:26px;background:var(--color-surface)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:12px;color:var(--color-neutral-700)">Preço 3</span>
+                  <span style="font-family:var(--font-heading);font-size:16px;margin-left:auto">R$ 7,20/kg</span>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1.25;height:56px;display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-size:15px;color:var(--color-neutral-700)">R$</span>
+                    <span style="font-family:var(--font-heading);font-size:22px">3,60</span>
+                  </div>
+                  <div style="flex:1;height:56px;display:flex;align-items:center;padding:0 16px;border-radius:999px;background:var(--color-bg);border:1px solid var(--color-divider)">
+                    <span style="font-family:var(--font-heading);font-size:22px">500</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px">
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">kg</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);font-family:var(--font-heading);font-size:15px">g</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">L</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">ml</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">m</div>
+                  <div style="flex:0 0 auto;min-width:62px;height:44px;border-radius:999px;display:grid;place-items:center;background:var(--color-bg);border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:15px">cm</div>
+                </div>
+              </div>
+  
+              <div style="display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:999px;border:1.5px dashed var(--color-neutral-400);font-family:var(--font-heading);font-size:15px;color:var(--color-neutral-800)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#474238" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Adicionar preço
+              </div>
+            </div>
+  
+            <div style="display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:32px;background:var(--color-accent-2-200);box-shadow:var(--shadow-md)">
+              <span style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-2-900)">Resultado</span>
+              <div style="display:flex;align-items:flex-end;gap:6px">
+                <span style="font-family:var(--font-heading);font-size:50px;line-height:0.95;color:var(--color-accent-2-900)">R$&nbsp;4,98</span>
+                <span style="font-family:var(--font-heading);font-size:20px;color:var(--color-accent-2-800);padding-bottom:5px">/kg</span>
+              </div>
+              <span style="font-size:15px;color:var(--color-accent-2-900)">O <strong>preço 1</strong> é o mais barato — 5 kg por R$ 24,90</span>
+              <sc-if value="{{ showSavings }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:22px;background:var(--color-bg)">
+                  <span style="font-family:var(--font-heading);font-size:20px;color:var(--color-accent-2-900)">18%</span>
+                  <span style="font-size:13px;color:var(--color-accent-2-900);text-wrap:pretty">abaixo do 2º melhor — R$ 6,40 de diferença em 5 kg</span>
+                </div>
+              </sc-if>
+            </div>
+  
+            <div style="height:58px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);font-family:var(--font-heading);font-size:17px;box-shadow:var(--shadow-md)">Salvar comparação</div>
+          </div>
+  
+          <div style="position:absolute;left:0;right:0;top:844px;border-top:1.5px dashed var(--color-accent-400);display:flex;justify-content:flex-end;padding:0 20px;pointer-events:none">
+            <span style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--color-accent-200);color:var(--color-accent-900);transform:translateY(-118%)">1ª dobra</span>
+          </div>
+        </div>
+        <p style="font-size:13px;margin:0;color:var(--color-neutral-700);text-wrap:pretty">Cada preço mostra seu R$/kg na própria linha, com o vencedor em verde-sálvia; o resultado fecha a rolagem. Misturar 5 kg, 2 kg e 500 g funciona.</p>
+      </div>
+
+      <!-- ░░ AJUSTES ░░ -->
+      <div id="3d" style="display:flex;flex-direction:column;gap:12px;width:390px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:var(--font-heading);font-size:13px;padding:5px 13px;border-radius:999px;background:var(--color-neutral-300);color:var(--color-neutral-900)">3d</span>
+          <span style="font-family:var(--font-heading);font-size:17px">Ajustes</span>
+        </div>
+        <div style="width:390px;height:844px;border-radius:38px;background:var(--color-bg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column">
+          <div style="padding:26px 22px 4px">
+            <h2 style="font-size:31px;margin:0">Ajustes</h2>
+          </div>
+
+          <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:14px;padding:18px 22px 0">
+
+            <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:28px;background:var(--color-surface)">
+              <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700)">Comparação</span>
+              <span style="font-size:15px">Mostrar preço por</span>
+              <div style="display:flex;gap:8px">
+                <div style="flex:1;min-height:48px;border-radius:999px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);font-family:var(--font-heading);font-size:14px;line-height:1.2;white-space:nowrap">kg · L</div>
+                <div style="flex:1;min-height:48px;border-radius:999px;display:grid;place-items:center;border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:14px;line-height:1.2;white-space:nowrap">100 g</div>
+                <div style="flex:1;min-height:48px;border-radius:999px;display:grid;place-items:center;border:1px solid var(--color-divider);font-family:var(--font-heading);font-size:14px;line-height:1.2;white-space:nowrap">unidade</div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;padding:6px 18px;border-radius:28px;background:var(--color-surface)">
+              <div style="display:flex;align-items:center;gap:14px;min-height:60px">
+                <div style="display:flex;flex-direction:column;flex:1">
+                  <span style="font-size:15px">Manter histórico de preços</span>
+                  <span style="font-size:12px;color:var(--color-neutral-700)">Guarda os preços já digitados</span>
+                </div>
+                <div style="width:54px;height:32px;border-radius:999px;background:var(--color-accent);display:flex;align-items:center;justify-content:flex-end;padding:3px;flex:none">
+                  <div style="width:26px;height:26px;border-radius:999px;background:var(--color-bg)"></div>
+                </div>
+              </div>
+              <div style="height:1px;background:var(--color-divider)"></div>
+              <div style="display:flex;align-items:center;gap:14px;min-height:60px">
+                <div style="display:flex;flex-direction:column;flex:1">
+                  <span style="font-size:15px">Arredondar centavos</span>
+                  <span style="font-size:12px;color:var(--color-neutral-700)">Mostra R$ 5 em vez de R$ 4,98</span>
+                </div>
+                <div style="width:54px;height:32px;border-radius:999px;background:var(--color-neutral-400);display:flex;align-items:center;padding:3px;flex:none">
+                  <div style="width:26px;height:26px;border-radius:999px;background:var(--color-bg)"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;padding:6px 18px;border-radius:28px;background:var(--color-surface)">
+              <div style="display:flex;align-items:center;gap:12px;min-height:60px">
+                <span style="font-size:15px;flex:1">Moeda</span>
+                <span style="font-size:15px;color:var(--color-neutral-700)">Real (R$)</span>
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+              <div style="height:1px;background:var(--color-divider)"></div>
+              <div style="display:flex;align-items:center;gap:12px;min-height:60px">
+                <span style="font-size:15px;flex:1">Sobre o app</span>
+                <span style="font-size:13px;color:var(--color-neutral-600)">versão 1.0</span>
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#82796a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:center;min-height:52px;font-size:15px;color:var(--color-accent-700)">Apagar todos os dados</div>
+          </div>
+
+          <sc-if value="{{ showBottomNav }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;padding:4px 14px 20px;gap:4px">
+              <div style="flex:1;height:56px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#645c50" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg>
+                <span style="font-size:11px;color:var(--color-neutral-700)">Comparações</span>
+              </div>
+              <div style="flex:1;height:56px;display:flex;align-items:center;justify-content:center">
+                <div style="width:54px;height:54px;border-radius:999px;background:var(--color-accent);display:grid;place-items:center;box-shadow:var(--shadow-md)">
+                  <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#f5ead8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                </div>
+              </div>
+              <div style="flex:1;height:56px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:var(--color-accent-100)">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8c491a" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>
+                <span style="font-size:11px;color:var(--color-accent-800)">Ajustes</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <span style="font-size:13px;color:var(--color-neutral-700)">Ajustes</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section id="paleta" style="display:flex;flex-direction:column;gap:28px;padding:16px 64px 96px;font-family:var(--font-body);color:var(--color-text)">
+  <div style="display:flex;flex-direction:column;gap:8px;max-width:760px">
+    <h4 style="margin:0;font-size:19px">Paleta de cores</h4>
+    <p style="font-size:14px;margin:0;color:var(--color-neutral-700);text-wrap:pretty">Terracota para ação, sálvia para "mais barato", neutros quentes para o resto. Os tons marcados são os usados nas telas.</p>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;flex-direction:column;gap:10px;width:200px">
+      <div style="height:110px;border-radius:28px;background:var(--color-bg);box-shadow:var(--shadow-sm);border:1px solid var(--color-divider)"></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-left:4px"><span style="font-family:var(--font-heading);font-size:16px">Fundo</span><span style="font-size:12px;color:var(--color-neutral-700)">#F5EAD8 · telas</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:200px">
+      <div style="height:110px;border-radius:28px;background:var(--color-surface)"></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-left:4px"><span style="font-family:var(--font-heading);font-size:16px">Superfície</span><span style="font-size:12px;color:var(--color-neutral-700)">#EBDDC5 · cartões, campos</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:200px">
+      <div style="height:110px;border-radius:28px;background:var(--color-text)"></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-left:4px"><span style="font-family:var(--font-heading);font-size:16px">Texto</span><span style="font-size:12px;color:var(--color-neutral-700)">#201E1D · títulos, valores</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:200px">
+      <div style="height:110px;border-radius:28px;background:var(--color-accent)"></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-left:4px"><span style="font-family:var(--font-heading);font-size:16px">Terracota</span><span style="font-size:12px;color:var(--color-neutral-700)">#C67139 · botões, unidade ativa, +</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:200px">
+      <div style="height:110px;border-radius:28px;background:var(--color-accent-2-700)"></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-left:4px"><span style="font-family:var(--font-heading);font-size:16px">Sálvia</span><span style="font-size:12px;color:var(--color-neutral-700)">#56633F · selo "Mais barato"</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:18px;max-width:1100px">
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700)">Terracota — ação</span>
+      <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px">
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-100);border:2px solid var(--color-text)"></div><span style="font-size:11px">100 · #FFF2EB</span><span style="font-size:11px;color:var(--color-neutral-700)">nav ativa</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-200)"></div><span style="font-size:11px">200 · #FFE1D0</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-300)"></div><span style="font-size:11px">300 · #FFC6A5</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-400)"></div><span style="font-size:11px">400 · #F6A06B</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-500);border:2px solid var(--color-text)"></div><span style="font-size:11px">500 · #D67F48</span><span style="font-size:11px;color:var(--color-neutral-700)">base</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-600)"></div><span style="font-size:11px">600 · #B2622D</span><span style="font-size:11px;color:var(--color-neutral-700)">pressionado</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-700);border:2px solid var(--color-text)"></div><span style="font-size:11px">700 · #8C491A</span><span style="font-size:11px;color:var(--color-neutral-700)">avisos, links</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-800);border:2px solid var(--color-text)"></div><span style="font-size:11px">800 · #643312</span><span style="font-size:11px;color:var(--color-neutral-700)">rótulo nav</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-900)"></div><span style="font-size:11px">900 · #402310</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-2-700)">Sálvia — mais barato</span>
+      <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px">
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-100);border:2px solid var(--color-text)"></div><span style="font-size:11px">100 · #F0FAE1</span><span style="font-size:11px;color:var(--color-neutral-700)">texto no selo</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-200);border:2px solid var(--color-text)"></div><span style="font-size:11px">200 · #E1EECC</span><span style="font-size:11px;color:var(--color-neutral-700)">cartão vencedor</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-300)"></div><span style="font-size:11px">300 · #CCDBB2</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-400)"></div><span style="font-size:11px">400 · #AEBF92</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-500)"></div><span style="font-size:11px">500 · #8FA073</span><span style="font-size:11px;color:var(--color-neutral-700)">base</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-600)"></div><span style="font-size:11px">600 · #728157</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-700);border:2px solid var(--color-text)"></div><span style="font-size:11px">700 · #56633F</span><span style="font-size:11px;color:var(--color-neutral-700)">selo</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-800);border:2px solid var(--color-text)"></div><span style="font-size:11px">800 · #3D472B</span><span style="font-size:11px;color:var(--color-neutral-700)">texto secundário</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-accent-2-900);border:2px solid var(--color-text)"></div><span style="font-size:11px">900 · #272E1B</span><span style="font-size:11px;color:var(--color-neutral-700)">preço vencedor</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700)">Neutros quentes — estrutura</span>
+      <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px">
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-100)"></div><span style="font-size:11px">100 · #F9F4ED</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-200)"></div><span style="font-size:11px">200 · #EEE7DB</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-300);border:2px solid var(--color-text)"></div><span style="font-size:11px">300 · #DCD3C4</span><span style="font-size:11px;color:var(--color-neutral-700)">botão inativo</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-400);border:2px solid var(--color-text)"></div><span style="font-size:11px">400 · #C0B6A5</span><span style="font-size:11px;color:var(--color-neutral-700)">tracejado, toggle off</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-500);border:2px solid var(--color-text)"></div><span style="font-size:11px">500 · #A19786</span><span style="font-size:11px;color:var(--color-neutral-700)">placeholder</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-600);border:2px solid var(--color-text)"></div><span style="font-size:11px">600 · #82796A</span><span style="font-size:11px;color:var(--color-neutral-700)">ícones de seta</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-700);border:2px solid var(--color-text)"></div><span style="font-size:11px">700 · #645C50</span><span style="font-size:11px;color:var(--color-neutral-700)">texto secundário</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-800)"></div><span style="font-size:11px">800 · #474238</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="height:64px;border-radius:18px;background:var(--color-neutral-900)"></div><span style="font-size:11px">900 · #2E2B25</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showSavings&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Conteúdo&quot;},&quot;showBottomNav&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navegação&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showSavings: this.props.showSavings ?? true,
+      showBottomNav: this.props.showBottomNav ?? true,
+    };
+  }
+}
+</script>
+</body>
+</html>
