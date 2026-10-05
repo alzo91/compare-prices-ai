@@ -20,6 +20,31 @@ Storage decision and data rules: [APP-SPEC.md](./APP-SPEC.md).
 
 Add packages with `npx expo install <pkg>` (not `npm install <pkg>`) so versions match the SDK.
 
+## Storybook
+
+Shared components are documented with [Storybook for React Native](https://storybookjs.github.io/react-native/)
+(`@storybook/react-native` v10, on-device Controls + Actions). Stories sit next to each component
+(`*.stories.tsx`) and render inside the real `ThemeProvider` and font loading
+(`.rnstorybook/preview.tsx`).
+
+```bash
+npm run storybook:start       # Metro in Storybook mode (clears cache); open it in the installed dev build
+npm run storybook:ios      # or :android — build + run the dev build in Storybook mode
+npm start -- -c            # back to the normal app (clear Metro cache after switching modes)
+```
+
+- The mode is chosen by `EXPO_PUBLIC_STORYBOOK_ENABLED=true` (set by the scripts above). `index.js`
+  (the app entry) loads `.rnstorybook` when it is `true` and `expo-router/entry` otherwise, and
+  `metro.config.js` uses `withStorybook({ enabled })`, so the normal app and production bundles
+  contain no Storybook code.
+- Metro caches transforms across modes: always pass `-c` when switching between app and Storybook.
+- Storybook needs a development build (not Expo Go), like the rest of the app (MMKV).
+- Add a story: create `<component>.stories.tsx` under `src/components/**` (CSF with `Meta` /
+  `StoryObj` from `@storybook/react-native`, `args` + `argTypes` for Controls). Metro regenerates
+  `.rnstorybook/storybook.requires.ts` on start.
+- `@storybook/react-native` declares `react-native-safe-area-context@5.8.0` as an exact peer; the
+  SDK 57 pin is `~5.7.0`, so `package.json` has an `overrides` entry to keep the Expo version.
+
 ## Project structure
 
 ```
