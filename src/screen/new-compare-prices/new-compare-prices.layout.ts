@@ -22,4 +22,27 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '800',
   },
+  content: {
+    paddingTop: 24,
+    paddingBottom: 32,
+    gap: 16,
+  },
+  subtitle: {
+    fontSize: 32,
+    lineHeight: 36,
+    fontWeight: '800',
+  },
+  section: {
+    gap: 8,
+  },
+  label: {
+    fontSize: 14,
+    paddingHorizontal: 4,
+  },
+  sectionLabel: {
+    fontSize: 13,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    paddingHorizontal: 8,
+  },
 });
