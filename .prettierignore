@@ -9,3 +9,4 @@ Designer/
 .agents/
 package-lock.json
 *.md
+.rnstorybook/storybook.requires.ts

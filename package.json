@@ -1,12 +1,20 @@
 {
   "name": "compare-prices",
-  "main": "expo-router/entry",
+  "main": "index.js",
   "version": "1.0.0",
   "dependencies": {
     "@expo-google-fonts/caprasimo": "^0.4.0",
     "@expo-google-fonts/figtree": "^0.4.1",
     "@expo/ui": "~57.0.21",
+    "@gorhom/bottom-sheet": "^5.2.14",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@react-native-community/slider": "5.2.0",
+    "@storybook/addon-ondevice-actions": "^10.6.0",
+    "@storybook/addon-ondevice-controls": "^10.6.0",
+    "@storybook/react-native": "^10.6.0",
     "@types/jest": "29.5.14",
+    "cross-env": "^10.1.0",
     "expo": "~57.0.26",
     "expo-constants": "~57.0.20",
     "expo-crypto": "~57.0.3",
@@ -36,7 +44,9 @@
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
-    "react-native-worklets": "0.10.1"
+    "react-native-svg": "15.15.4",
+    "react-native-worklets": "0.10.1",
+    "storybook": "^10.6.1"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
@@ -55,7 +65,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "storybook:start": "cross-env EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start -c",
+    "storybook:ios": "cross-env EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:ios",
+    "storybook:android": "cross-env EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:android"
   },
-  "private": true
+  "private": true,
+  "overrides": {
+    "@storybook/react-native": {
+      "react-native-safe-area-context": "$react-native-safe-area-context"
+    }
+  }
 }

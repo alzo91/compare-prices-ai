@@ -58,3 +58,5 @@ GoogleService-Info.plist
 credentials.json
 extensions.json
 settings.json
+*storybook.log
+storybook-static
