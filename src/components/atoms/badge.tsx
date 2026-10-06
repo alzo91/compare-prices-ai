@@ -7,14 +7,21 @@ export type BadgeProps = {
   label: string;
   // "best" = "Melhor" (soft sálvia, home cards); "cheapest" = "Mais barato" (solid sálvia, price card).
   tone?: 'best' | 'cheapest';
+  // Defaults to label. The meaning is carried by the text, never by the colour alone.
+  accessibilityLabel?: string;
 };
 
-export function Badge({ label, tone = 'best' }: BadgeProps) {
+export function Badge({ label, tone = 'best', accessibilityLabel }: BadgeProps) {
   const { colors } = useTheme();
   const solid = tone === 'cheapest';
 
   return (
-    <View style={[styles.badge, { backgroundColor: solid ? colors.accent2 : colors.accent2Soft }]}>
+    <View
+      accessible
+      accessibilityRole="text"
+      accessibilityLabel={accessibilityLabel ?? label}
+      style={[styles.badge, { backgroundColor: solid ? colors.accent2 : colors.accent2Soft }]}
+    >
       <Text
         style={[styles.label, { color: solid ? colors.onAccent2 : colors.accent2Strong }]}
         numberOfLines={1}

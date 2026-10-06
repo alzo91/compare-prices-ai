@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 
+import { MIN_TOUCH_TARGET } from '@/components/touch-target';
 import { fontFamily } from '@/theme/typography';
 import { useTheme } from '@/theme/useTheme';
 
@@ -7,16 +8,26 @@ export type ButtonProps = {
   label: string;
   onPress?: () => void;
   disabled?: boolean;
+  // Override what screen readers announce (default: label). Pass translated strings.
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 // Primary action (terracota, full width). Disabled uses the "inactive button" neutral.
-export function Button({ label, onPress, disabled = false }: ButtonProps) {
-  const { colors } = useTheme();
+export function Button({
+  label,
+  onPress,
+  disabled = false,
+  accessibilityLabel,
+  accessibilityHint,
+}: ButtonProps) {
+  const { colors, palette } = useTheme();
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityHint={accessibilityHint}
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
@@ -31,7 +42,7 @@ export function Button({ label, onPress, disabled = false }: ButtonProps) {
         },
       ]}
     >
-      <Text style={[styles.label, { color: disabled ? colors.textMuted : colors.onAccent }]}>
+      <Text style={[styles.label, { color: disabled ? palette.neutral[800] : colors.onAccent }]}>
         {label}
       </Text>
     </Pressable>
@@ -40,7 +51,7 @@ export function Button({ label, onPress, disabled = false }: ButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    height: 64,
+    minHeight: Math.max(64, MIN_TOUCH_TARGET),
     borderRadius: 999,
     paddingHorizontal: 24,
     alignItems: 'center',

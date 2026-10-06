@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon, type IconName } from '@/components/atoms/icon';
+import { MIN_TOUCH_TARGET } from '@/components/touch-target';
 import { useI18n } from '@/i18n';
 import { fontFamily } from '@/theme/typography';
 import { useTheme } from '@/theme/useTheme';
@@ -40,7 +41,7 @@ export function BottomBar({ state, descriptors, navigation }: BottomTabBarProps)
         key={route.key}
         accessibilityRole="tab"
         accessibilityState={{ selected: isFocused }}
-        accessibilityLabel={label}
+        accessibilityLabel={descriptors[route.key].options.tabBarAccessibilityLabel ?? label}
         onPress={onPress}
         style={[styles.tab, isFocused && { backgroundColor: colors.accentSoft }]}
       >
@@ -86,7 +87,8 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     maxWidth: 140,
-    minHeight: 56,
+    minHeight: Math.max(56, MIN_TOUCH_TARGET),
+    minWidth: MIN_TOUCH_TARGET,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 4,
@@ -99,8 +101,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   fab: {
-    width: 64,
-    height: 64,
+    width: Math.max(64, MIN_TOUCH_TARGET),
+    height: Math.max(64, MIN_TOUCH_TARGET),
     borderRadius: 32,
     alignItems: 'center',
     justifyContent: 'center',

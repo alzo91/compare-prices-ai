@@ -8,14 +8,25 @@ export type CardProps = PropsWithChildren<{
   tone?: 'default' | 'highlight';
   // Dims the card (e.g. archived item on Home).
   muted?: boolean;
+  // Optional: groups the card into a single screen-reader element (e.g. "Milk, cheapest, R$ 4.59").
+  // The highlight colour alone never conveys "cheapest"; put a Badge or text in the card too.
+  accessibilityLabel?: string;
   style?: StyleProp<ViewStyle>;
 }>;
 
 // Rounded surface container used by home items, price rows, result and settings groups.
-export function Card({ tone = 'default', muted = false, style, children }: CardProps) {
+export function Card({
+  tone = 'default',
+  muted = false,
+  accessibilityLabel,
+  style,
+  children,
+}: CardProps) {
   const { colors } = useTheme();
   return (
     <View
+      accessible={accessibilityLabel ? true : undefined}
+      accessibilityLabel={accessibilityLabel}
       style={[
         styles.card,
         { backgroundColor: tone === 'highlight' ? colors.accent2Soft : colors.surface },
