@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon, type IconName } from '@/components/atoms/icon';
 import { useI18n } from '@/i18n';
+import { fontFamily } from '@/theme/typography';
 import { useTheme } from '@/theme/useTheme';
 
 const TAB_ICONS: Record<string, IconName> = {
@@ -14,14 +15,14 @@ const TAB_ICONS: Record<string, IconName> = {
 
 // Tab bar from the Home / Ajustes designs: Comparações · "+" FAB · Ajustes.
 export function BottomBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const { colors } = useTheme();
+  const { colors, palette } = useTheme();
   const { t } = useI18n();
   const insets = useSafeAreaInsets();
 
   const tabs = state.routes.map((route, index) => {
     const isFocused = state.index === index;
     const label = descriptors[route.key].options.title ?? route.name;
-    const color = isFocused ? colors.accent : colors.textMuted;
+    const color = isFocused ? palette.terracota[800] : colors.textMuted; // active: "nav label"
 
     const onPress = () => {
       const event = navigation.emit({
@@ -85,13 +86,17 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     maxWidth: 140,
+    minHeight: 56,
+    justifyContent: 'center',
     alignItems: 'center',
     gap: 4,
     paddingVertical: 10,
     borderRadius: 24,
   },
   label: {
+    fontFamily: fontFamily.body,
     fontSize: 13,
+    lineHeight: 18,
   },
   fab: {
     width: 64,
