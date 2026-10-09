@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 
+import { MIN_TOUCH_TARGET } from '@/components/touch-target';
 import { fontFamily } from '@/theme/typography';
 import { useTheme } from '@/theme/useTheme';
 
@@ -8,19 +9,39 @@ export type PillInputProps = Omit<TextInputProps, 'style' | 'placeholderTextColo
   prefix?: string;
   // "surface" = on the screen background (product, search); "background" = inside a card.
   on?: 'surface' | 'background';
+  // Pass a translated label; falls back to the placeholder when omitted.
+  accessibilityLabel?: string;
 };
 
 // Pill-shaped text input: product name, search, price (with "R$" prefix) and quantity.
-export function PillInput({ prefix, on = 'surface', ...inputProps }: PillInputProps) {
+export function PillInput({
+  prefix,
+  on = 'surface',
+  accessibilityLabel,
+  ...inputProps
+}: PillInputProps) {
   const { colors, palette } = useTheme();
+  // Label announced by screen readers: caller's label, else the placeholder, plus the prefix.
+  const base = accessibilityLabel ?? inputProps.placeholder;
+  const label = prefix && base ? `${base} (${prefix})` : base;
   const fill = on === 'surface' ? colors.surface : colors.background;
 
   return (
-    <View style={[styles.pill, { backgroundColor: fill, borderColor: colors.divider }]}>
-      {prefix ? <Text style={[styles.prefix, { color: colors.textMuted }]}>{prefix}</Text> : null}
+    <View style={[styles.pill, { backgroundColor: fill, borderColor: colors.border }]}>
+      {prefix ? (
+        // Read as part of the input's label instead of as a separate element.
+        <Text
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+          style={[styles.prefix, { color: colors.textMuted }]}
+        >
+          {prefix}
+        </Text>
+      ) : null}
       <TextInput
         {...inputProps}
-        placeholderTextColor={palette.neutral[500]}
+        accessibilityLabel={label}
+        placeholderTextColor={palette.neutral[700]}
         selectionColor={colors.accent}
         style={[styles.input, { color: colors.text }]}
       />
@@ -30,7 +51,7 @@ export function PillInput({ prefix, on = 'surface', ...inputProps }: PillInputPr
 
 const styles = StyleSheet.create({
   pill: {
-    height: 56,
+    minHeight: 56,
     paddingHorizontal: 24,
     borderRadius: 999,
     borderWidth: 1,
@@ -39,5 +60,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   prefix: { fontFamily: fontFamily.body, fontSize: 17 },
-  input: { flex: 1, fontFamily: fontFamily.body, fontSize: 18, padding: 0 },
+  input: {
+    flex: 1,
+    minHeight: MIN_TOUCH_TARGET,
+    fontFamily: fontFamily.body,
+    fontSize: 18,
+    padding: 0,
+  },
 });
