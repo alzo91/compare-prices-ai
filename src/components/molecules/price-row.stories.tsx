@@ -41,6 +41,12 @@ export const Highlighted: Story = {
   args: { price: '24,90', quantity: '5', unit: 'kg', highlight: true },
 };
 
+// Row 3+: shows the remove control.
+export const Removable: Story = {
+  args: { index: 3, price: '24,90', quantity: '5', unit: 'kg', onRemove: () => {} },
+  argTypes: { onRemove: { action: 'removed' } },
+};
+
 // Interactive: typing and picking a unit update the row.
 function InteractiveRow(args: PriceRowProps) {
   const [price, setPrice] = useState('');

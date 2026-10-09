@@ -1,8 +1,10 @@
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { Card } from '@/components/atoms/card';
+import { Icon } from '@/components/atoms/icon';
 import { Pill } from '@/components/atoms/pill';
 import { Text } from '@/components/atoms/text';
+import { MIN_TOUCH_TARGET } from '@/components/touch-target';
 import { useI18n } from '@/i18n';
 import type { Unit } from '@/models/Unit';
 import { fontFamily } from '@/theme/typography';
@@ -24,6 +26,8 @@ export type PriceRowProps = {
   onChangePrice: (text: string) => void;
   onChangeQuantity: (text: string) => void;
   onChangeUnit: (unit: Unit) => void;
+  // When set, a remove control is shown in the card header (rows 3+, task 4.3).
+  onRemove?: () => void;
 };
 
 // One price entry: price + quantity fields and a single-select unit pill row.
@@ -38,6 +42,7 @@ export function PriceRow({
   onChangePrice,
   onChangeQuantity,
   onChangeUnit,
+  onRemove,
 }: PriceRowProps) {
   const { colors, palette } = useTheme();
   const { t } = useI18n();
@@ -47,9 +52,22 @@ export function PriceRow({
 
   return (
     <Card tone={highlight ? 'highlight' : 'default'} style={styles.card}>
-      <Text variant="caption" color="textMuted">
-        {t('newComparison.priceN', { index })}
-      </Text>
+      <View style={styles.header}>
+        <Text variant="caption" color="textMuted">
+          {t('newComparison.priceN', { index })}
+        </Text>
+        {onRemove ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('newComparison.removePriceN', { index })}
+            onPress={onRemove}
+            hitSlop={8}
+            style={styles.remove}
+          >
+            <Icon name={{ ios: 'trash', android: 'delete' }} color={colors.textMuted} size={20} />
+          </Pressable>
+        ) : null}
+      </View>
       <View style={styles.fields}>
         <View style={[field, styles.priceField]}>
           <Text variant="body" color="textMuted" style={styles.prefix}>
@@ -102,6 +120,16 @@ export function PriceRow({
 
 const styles = StyleSheet.create({
   card: { gap: 12 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  // Fixed-size target (negative margin keeps the header height unchanged).
+  remove: {
+    width: MIN_TOUCH_TARGET,
+    height: MIN_TOUCH_TARGET,
+    marginVertical: -12,
+    marginRight: -8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   fields: { flexDirection: 'row', gap: 12 },
   field: {
     height: 56,

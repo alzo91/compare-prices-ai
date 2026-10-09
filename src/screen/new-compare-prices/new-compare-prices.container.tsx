@@ -3,9 +3,15 @@ import { useState } from 'react';
 
 import { useFormat } from '@/i18n/format';
 import { useI18n } from '@/i18n';
-import type { Unit } from '@/models/Unit';
 
-import { isFormValid } from './new-compare-prices.form';
+import {
+  addRow,
+  canRemoveRow,
+  createInitialRows,
+  isFormValid,
+  removeRow,
+  updateRow,
+} from './new-compare-prices.form';
 import { NewComparePricesScene } from './new-compare-prices.scene';
 
 type NewComparePricesContainerProps = {
@@ -15,33 +21,35 @@ type NewComparePricesContainerProps = {
 
 const CURRENCY_SYMBOL = { 'pt-BR': 'R$', 'en-US': '$' } as const;
 
-// Container: form state. Rows (4.3), result (4.4) and saving (4.6) come later.
+// Container: form state. Result (4.4) and saving (4.6) come later.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
   const { language } = useFormat();
   const title = comparisonId ? t('newComparison.editTitle') : t('newComparison.title');
 
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [unit, setUnit] = useState<Unit | null>('kg'); // kg preselected, as in the Designer
+  const [rowsState, setRowsState] = useState(createInitialRows);
+  const rows = rowsState.rows.map((row) => ({
+    ...row,
+    removable: canRemoveRow(rowsState, row.id),
+  }));
 
   // Will enable the Save button (task 4.6).
-  const isValid = isFormValid({ productName, row: { price, quantity, unit } }, language);
+  const isValid = isFormValid({ productName, row: rows[0] }, language);
 
   return (
     <NewComparePricesScene
       title={title}
       productName={productName}
-      price={price}
-      quantity={quantity}
-      unit={unit}
+      rows={rows}
       currencySymbol={CURRENCY_SYMBOL[language]}
       isValid={isValid}
       onChangeProductName={setProductName}
-      onChangePrice={setPrice}
-      onChangeQuantity={setQuantity}
-      onChangeUnit={setUnit}
+      onChangePrice={(id, price) => setRowsState((s) => updateRow(s, id, { price }))}
+      onChangeQuantity={(id, quantity) => setRowsState((s) => updateRow(s, id, { quantity }))}
+      onChangeUnit={(id, unit) => setRowsState((s) => updateRow(s, id, { unit }))}
+      onAddRow={() => setRowsState(addRow)}
+      onRemoveRow={(id) => setRowsState((s) => removeRow(s, id))}
       onClose={() => router.back()}
     />
   );
