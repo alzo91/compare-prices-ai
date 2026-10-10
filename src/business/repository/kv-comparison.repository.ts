@@ -23,7 +23,10 @@ export class KeyValueComparisonRepository implements ComparisonRepository {
   }
 
   async list() {
-    return this.read().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    // Reverse first so that, on equal timestamps, the most recently written row comes first.
+    return this.read()
+      .reverse()
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }
 
   async get(id: string) {
