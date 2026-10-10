@@ -42,7 +42,9 @@
     "cheapest": "Cheapest",
     "result": "Result",
     "resultWinner": "Price {{index}} is the cheapest — {{quantity}} for {{price}}",
-    "resultBelowSecond": "{{percent}} below the 2nd best — {{difference}} difference over {{quantity}}"
+    "resultBelowSecond": "{{percent}} below the 2nd best — {{difference}} difference over {{quantity}}",
+    "resultBelowSecondDetail": "below the 2nd best — {{difference}} difference over {{quantity}}",
+    "resultTie": "Tie — prices {{indexes}} cost the same per unit"
   },
   "settings": {
     "title": "Settings",

@@ -11,6 +11,8 @@ import { useTheme } from '@/theme/useTheme';
 
 import type { PriceRowDraft } from './new-compare-prices.form';
 import { styles } from './new-compare-prices.layout';
+import type { ResultCardModel } from './new-compare-prices.result';
+import { ResultCard } from './result-card';
 
 // A form row plus whether it shows the remove control (rows 3+).
 export type SceneRow = PriceRowDraft & { removable: boolean };
@@ -20,6 +22,8 @@ type NewComparePricesSceneProps = {
   productName: string;
   rows: SceneRow[];
   currencySymbol: string;
+  // Null hides the card (fewer than 2 valid rows).
+  result: ResultCardModel | null;
   // Product name and price row are valid; will enable Save (task 4.6).
   isValid: boolean;
   onChangeProductName: (text: string) => void;
@@ -36,6 +40,7 @@ export function NewComparePricesScene({
   productName,
   rows,
   currencySymbol,
+  result,
   onChangeProductName,
   onChangePrice,
   onChangeQuantity,
@@ -96,6 +101,7 @@ export function NewComparePricesScene({
           />
         ))}
         <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
+        {result ? <ResultCard result={result} /> : null}
       </ScrollView>
     </SafeAreaView>
   );
