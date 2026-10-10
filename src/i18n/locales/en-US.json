@@ -46,6 +46,17 @@
     "resultBelowSecondDetail": "below the 2nd best — {{difference}} difference over {{quantity}}",
     "resultTie": "Tie — prices {{indexes}} cost the same per unit"
   },
+  "validation": {
+    "productEmpty": "Enter the product name",
+    "priceEmpty": "Enter the price",
+    "quantityEmpty": "Enter the quantity",
+    "notANumber": "Enter a valid number, e.g. 4.59",
+    "zero": "The value must be greater than zero",
+    "negative": "The value cannot be negative",
+    "unitEmpty": "Choose a unit",
+    "mixedUnitsTitle": "Different types of measurement",
+    "mixedUnits": "These prices use units that cannot be compared (for example kg and L). Use units of the same type in every price to see the result."
+  },
   "settings": {
     "title": "Settings",
     "comparisonSection": "Comparison",

@@ -1,6 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { Card } from '@/components/atoms/card';
+import { FieldError } from '@/components/atoms/field-error';
 import { Icon } from '@/components/atoms/icon';
 import { Pill } from '@/components/atoms/pill';
 import { Text } from '@/components/atoms/text';
@@ -26,6 +27,11 @@ export type PriceRowProps = {
   onChangePrice: (text: string) => void;
   onChangeQuantity: (text: string) => void;
   onChangeUnit: (unit: Unit) => void;
+  // Translated inline error messages (task 4.7). A field with a message gets an error border.
+  errors?: { price?: string; quantity?: string; unit?: string };
+  // Called when a field loses focus, so the screen can start showing its errors.
+  onBlurPrice?: () => void;
+  onBlurQuantity?: () => void;
   // When set, a remove control is shown in the card header (rows 3+, task 4.3).
   onRemove?: () => void;
 };
@@ -42,12 +48,22 @@ export function PriceRow({
   onChangePrice,
   onChangeQuantity,
   onChangeUnit,
+  errors,
+  onBlurPrice,
+  onBlurQuantity,
   onRemove,
 }: PriceRowProps) {
   const { colors, palette } = useTheme();
   const { t } = useI18n();
 
-  const field = [styles.field, { backgroundColor: colors.background, borderColor: colors.divider }];
+  const field = (message?: string) => [
+    styles.field,
+    {
+      backgroundColor: colors.background,
+      borderColor: message ? colors.accentText : colors.divider,
+    },
+    message ? styles.fieldError : null,
+  ];
   const input = [styles.input, { color: colors.text }];
 
   return (
@@ -69,13 +85,15 @@ export function PriceRow({
         ) : null}
       </View>
       <View style={styles.fields}>
-        <View style={[field, styles.priceField]}>
+        <View style={[field(errors?.price), styles.priceField]}>
           <Text variant="body" color="textMuted" style={styles.prefix}>
             {currencySymbol}
           </Text>
           <TextInput
             value={price}
             onChangeText={onChangePrice}
+            onBlur={onBlurPrice}
+            accessibilityHint={errors?.price}
             placeholder={t('newComparison.pricePlaceholder')}
             placeholderTextColor={palette.neutral[500]}
             selectionColor={colors.accent}
@@ -84,10 +102,12 @@ export function PriceRow({
             style={input}
           />
         </View>
-        <View style={[field, styles.quantityField]}>
+        <View style={[field(errors?.quantity), styles.quantityField]}>
           <TextInput
             value={quantity}
             onChangeText={onChangeQuantity}
+            onBlur={onBlurQuantity}
+            accessibilityHint={errors?.quantity}
             placeholder={t('newComparison.quantityShort')}
             placeholderTextColor={palette.neutral[500]}
             selectionColor={colors.accent}
@@ -97,6 +117,8 @@ export function PriceRow({
           />
         </View>
       </View>
+      {errors?.price ? <FieldError message={errors.price} /> : null}
+      {errors?.quantity ? <FieldError message={errors.quantity} /> : null}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -114,6 +136,7 @@ export function PriceRow({
           ))}
         </View>
       </ScrollView>
+      {errors?.unit ? <FieldError message={errors.unit} /> : null}
     </Card>
   );
 }
@@ -140,6 +163,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
+  fieldError: { borderWidth: 2 },
   priceField: { flex: 6 },
   quantityField: { flex: 5 },
   prefix: { fontSize: 17 },
