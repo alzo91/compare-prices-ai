@@ -10,12 +10,17 @@ import type { Unit } from '@/models/Unit';
 import { useTheme } from '@/theme/useTheme';
 
 import type { PriceRowDraft } from './new-compare-prices.form';
+import { MixedUnitsNotice } from './mixed-units-notice';
 import { styles } from './new-compare-prices.layout';
 import type { ResultCardModel } from './new-compare-prices.result';
 import { ResultCard } from './result-card';
 
 // A form row plus whether it shows the remove control (rows 3+).
-export type SceneRow = PriceRowDraft & { removable: boolean };
+export type SceneRow = PriceRowDraft & {
+  removable: boolean;
+  // Translated inline errors to show (task 4.7).
+  errors?: { price?: string; quantity?: string; unit?: string };
+};
 
 type NewComparePricesSceneProps = {
   title: string;
@@ -26,6 +31,13 @@ type NewComparePricesSceneProps = {
   result: ResultCardModel | null;
   // Product name and price row are valid; will enable Save (task 4.6).
   isValid: boolean;
+  // Translated product name error (task 4.7).
+  productNameError?: string;
+  // Rows mix measurement types: show a message instead of a result (task 4.7).
+  mixedUnits?: boolean;
+  onBlurProductName?: () => void;
+  onBlurPrice?: (id: string) => void;
+  onBlurQuantity?: (id: string) => void;
   onChangeProductName: (text: string) => void;
   onChangePrice: (id: string, text: string) => void;
   onChangeQuantity: (id: string, text: string) => void;
@@ -41,6 +53,11 @@ export function NewComparePricesScene({
   rows,
   currencySymbol,
   result,
+  productNameError,
+  mixedUnits = false,
+  onBlurProductName,
+  onBlurPrice,
+  onBlurQuantity,
   onChangeProductName,
   onChangePrice,
   onChangeQuantity,
@@ -77,6 +94,8 @@ export function NewComparePricesScene({
           <PillInput
             value={productName}
             onChangeText={onChangeProductName}
+            onBlur={onBlurProductName}
+            error={productNameError}
             placeholder={t('newComparison.productPlaceholder')}
             accessibilityLabel={t('newComparison.productLabel')}
             autoCapitalize="sentences"
@@ -97,9 +116,13 @@ export function NewComparePricesScene({
             onChangePrice={(text) => onChangePrice(row.id, text)}
             onChangeQuantity={(text) => onChangeQuantity(row.id, text)}
             onChangeUnit={(unit) => onChangeUnit(row.id, unit)}
+            errors={row.errors}
+            onBlurPrice={() => onBlurPrice?.(row.id)}
+            onBlurQuantity={() => onBlurQuantity?.(row.id)}
             onRemove={row.removable ? () => onRemoveRow(row.id) : undefined}
           />
         ))}
+        {mixedUnits ? <MixedUnitsNotice /> : null}
         <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
         {result ? <ResultCard result={result} /> : null}
       </ScrollView>
