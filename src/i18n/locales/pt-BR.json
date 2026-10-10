@@ -46,6 +46,17 @@
     "resultBelowSecondDetail": "abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
     "resultTie": "Empate — os preços {{indexes}} custam o mesmo por unidade"
   },
+  "validation": {
+    "productEmpty": "Informe o nome do produto",
+    "priceEmpty": "Informe o preço",
+    "quantityEmpty": "Informe a quantidade",
+    "notANumber": "Digite um número válido, ex.: 4,59",
+    "zero": "O valor deve ser maior que zero",
+    "negative": "O valor não pode ser negativo",
+    "unitEmpty": "Escolha uma unidade",
+    "mixedUnitsTitle": "Tipos de medida diferentes",
+    "mixedUnits": "Esses preços usam unidades que não podem ser comparadas (por exemplo kg e L). Use unidades do mesmo tipo em todos os preços para ver o resultado."
+  },
   "settings": {
     "title": "Ajustes",
     "comparisonSection": "Comparação",
