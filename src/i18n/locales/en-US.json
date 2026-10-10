@@ -36,6 +36,7 @@
     "quantityShort": "Qty.",
     "chooseUnit": "Choose the unit for this price",
     "addPrice": "Add price",
+    "removePriceN": "Remove price {{index}}",
     "unitHint": "Each price has its own unit — the result converts everything to the same base.",
     "saveComparison": "Save comparison",
     "cheapest": "Cheapest",

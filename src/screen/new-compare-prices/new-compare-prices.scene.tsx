@@ -2,41 +2,46 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Icon } from '@/components/atoms/icon';
+import { Button } from '@/components/atoms/button';
 import { PillInput } from '@/components/atoms/pill-input';
 import { PriceRow } from '@/components/molecules/price-row';
 import { useI18n } from '@/i18n';
 import type { Unit } from '@/models/Unit';
 import { useTheme } from '@/theme/useTheme';
 
+import type { PriceRowDraft } from './new-compare-prices.form';
 import { styles } from './new-compare-prices.layout';
+
+// A form row plus whether it shows the remove control (rows 3+).
+export type SceneRow = PriceRowDraft & { removable: boolean };
 
 type NewComparePricesSceneProps = {
   title: string;
   productName: string;
-  price: string;
-  quantity: string;
-  unit: Unit | null;
+  rows: SceneRow[];
   currencySymbol: string;
   // Product name and price row are valid; will enable Save (task 4.6).
   isValid: boolean;
   onChangeProductName: (text: string) => void;
-  onChangePrice: (text: string) => void;
-  onChangeQuantity: (text: string) => void;
-  onChangeUnit: (unit: Unit) => void;
+  onChangePrice: (id: string, text: string) => void;
+  onChangeQuantity: (id: string, text: string) => void;
+  onChangeUnit: (id: string, unit: Unit) => void;
+  onAddRow: () => void;
+  onRemoveRow: (id: string) => void;
   onClose: () => void;
 };
 
 export function NewComparePricesScene({
   title,
   productName,
-  price,
-  quantity,
-  unit,
+  rows,
   currencySymbol,
   onChangeProductName,
   onChangePrice,
   onChangeQuantity,
   onChangeUnit,
+  onAddRow,
+  onRemoveRow,
   onClose,
 }: NewComparePricesSceneProps) {
   const { colors } = useTheme();
@@ -76,16 +81,21 @@ export function NewComparePricesScene({
         <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>
           {t('newComparison.pricesLabel')}
         </Text>
-        <PriceRow
-          index={1}
-          price={price}
-          quantity={quantity}
-          unit={unit}
-          currencySymbol={currencySymbol}
-          onChangePrice={onChangePrice}
-          onChangeQuantity={onChangeQuantity}
-          onChangeUnit={onChangeUnit}
-        />
+        {rows.map((row, i) => (
+          <PriceRow
+            key={row.id}
+            index={i + 1}
+            price={row.price}
+            quantity={row.quantity}
+            unit={row.unit}
+            currencySymbol={currencySymbol}
+            onChangePrice={(text) => onChangePrice(row.id, text)}
+            onChangeQuantity={(text) => onChangeQuantity(row.id, text)}
+            onChangeUnit={(unit) => onChangeUnit(row.id, unit)}
+            onRemove={row.removable ? () => onRemoveRow(row.id) : undefined}
+          />
+        ))}
+        <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
       </ScrollView>
     </SafeAreaView>
   );

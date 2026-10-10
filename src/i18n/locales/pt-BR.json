@@ -36,6 +36,7 @@
     "quantityShort": "Qtd.",
     "chooseUnit": "Escolha a unidade deste preço",
     "addPrice": "Adicionar preço",
+    "removePriceN": "Remover preço {{index}}",
     "unitHint": "Cada preço tem sua própria unidade — o resultado converte tudo para a mesma base.",
     "saveComparison": "Salvar comparação",
     "cheapest": "Mais barato",
