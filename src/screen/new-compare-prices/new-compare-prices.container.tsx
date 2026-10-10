@@ -12,6 +12,7 @@ import {
   removeRow,
   updateRow,
 } from './new-compare-prices.form';
+import { buildResultCard } from './new-compare-prices.result';
 import { NewComparePricesScene } from './new-compare-prices.scene';
 
 type NewComparePricesContainerProps = {
@@ -21,7 +22,7 @@ type NewComparePricesContainerProps = {
 
 const CURRENCY_SYMBOL = { 'pt-BR': 'R$', 'en-US': '$' } as const;
 
-// Container: form state. Result (4.4) and saving (4.6) come later.
+// Container: form state. Saving (4.6) comes later.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
   const { language } = useFormat();
@@ -34,6 +35,9 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
     removable: canRemoveRow(rowsState, row.id),
   }));
 
+  // Recomputed on every render, i.e. on every keystroke or unit change.
+  const result = buildResultCard(rowsState.rows, language);
+
   // Will enable the Save button (task 4.6).
   const isValid = isFormValid({ productName, row: rows[0] }, language);
 
@@ -43,6 +47,7 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       productName={productName}
       rows={rows}
       currencySymbol={CURRENCY_SYMBOL[language]}
+      result={result}
       isValid={isValid}
       onChangeProductName={setProductName}
       onChangePrice={(id, price) => setRowsState((s) => updateRow(s, id, { price }))}

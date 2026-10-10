@@ -42,7 +42,9 @@
     "cheapest": "Mais barato",
     "result": "Resultado",
     "resultWinner": "O preço {{index}} é o mais barato — {{quantity}} por {{price}}",
-    "resultBelowSecond": "{{percent}} abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}"
+    "resultBelowSecond": "{{percent}} abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
+    "resultBelowSecondDetail": "abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
+    "resultTie": "Empate — os preços {{indexes}} custam o mesmo por unidade"
   },
   "settings": {
     "title": "Ajustes",
