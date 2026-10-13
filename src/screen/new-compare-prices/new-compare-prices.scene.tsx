@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Icon } from '@/components/atoms/icon';
 import { Button } from '@/components/atoms/button';
+import { FieldError } from '@/components/atoms/field-error';
 import { PillInput } from '@/components/atoms/pill-input';
 import { PriceRow } from '@/components/molecules/price-row';
 import { useI18n } from '@/i18n';
@@ -29,8 +30,11 @@ type NewComparePricesSceneProps = {
   currencySymbol: string;
   // Null hides the card (fewer than 2 valid rows).
   result: ResultCardModel | null;
-  // Product name and price row are valid; will enable Save (task 4.6).
+  // The whole form is valid: enables the Save button (task 4.6).
   isValid: boolean;
+  // Translated message when saving failed.
+  saveError?: string;
+  onSave: () => void;
   // Translated product name error (task 4.7).
   productNameError?: string;
   // Rows mix measurement types: show a message instead of a result (task 4.7).
@@ -53,6 +57,9 @@ export function NewComparePricesScene({
   rows,
   currencySymbol,
   result,
+  isValid,
+  saveError,
+  onSave,
   productNameError,
   mixedUnits = false,
   onBlurProductName,
@@ -125,6 +132,8 @@ export function NewComparePricesScene({
         {mixedUnits ? <MixedUnitsNotice /> : null}
         <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
         {result ? <ResultCard result={result} /> : null}
+        {saveError ? <FieldError message={saveError} /> : null}
+        <Button label={t('newComparison.saveComparison')} onPress={onSave} disabled={!isValid} />
       </ScrollView>
     </SafeAreaView>
   );

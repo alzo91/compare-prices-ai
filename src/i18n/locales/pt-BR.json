@@ -39,6 +39,7 @@
     "removePriceN": "Remover preço {{index}}",
     "unitHint": "Cada preço tem sua própria unidade — o resultado converte tudo para a mesma base.",
     "saveComparison": "Salvar comparação",
+    "saveError": "Não foi possível salvar. Tente novamente.",
     "cheapest": "Mais barato",
     "result": "Resultado",
     "resultWinner": "O preço {{index}} é o mais barato — {{quantity}} por {{price}}",
