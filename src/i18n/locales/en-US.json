@@ -26,7 +26,9 @@
     "packageSize": "{{size}} package",
     "packagesOf": "packages of {{sizes}}",
     "listAnd": " and ",
-    "openComparison": "Open comparison {{name}}"
+    "openComparison": "Open comparison {{name}}",
+    "emptyTitle": "No comparisons yet",
+    "emptyBody": "Tap the + button below to compare prices and find the cheapest option."
   },
   "newComparison": {
     "title": "New comparison",

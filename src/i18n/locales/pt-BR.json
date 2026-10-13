@@ -26,7 +26,9 @@
     "packageSize": "embalagem de {{size}}",
     "packagesOf": "pacotes de {{sizes}}",
     "listAnd": " e ",
-    "openComparison": "Abrir comparação {{name}}"
+    "openComparison": "Abrir comparação {{name}}",
+    "emptyTitle": "Nenhuma comparação ainda",
+    "emptyBody": "Toque no botão + abaixo para comparar preços e descobrir a opção mais barata."
   },
   "newComparison": {
     "title": "Nova comparação",
