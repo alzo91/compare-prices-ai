@@ -2,8 +2,13 @@ import Constants from 'expo-constants';
 import { router } from 'expo-router';
 
 import { AboutScene } from './about.scene';
+import { resolveAppVersion } from './about.version';
 
-// Container: full "Sobre o app" content comes with task 7.4.
 export function AboutContainer() {
-  return <AboutScene version={Constants.expoConfig?.version ?? ''} onBack={() => router.back()} />;
+  return (
+    <AboutScene
+      version={resolveAppVersion(Constants.expoConfig?.version)}
+      onBack={() => router.back()}
+    />
+  );
 }

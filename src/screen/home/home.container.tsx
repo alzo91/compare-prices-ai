@@ -13,6 +13,7 @@ import { HomeScene } from './home.scene';
 export function HomeContainer() {
   const basis = useDisplayBasis();
   const [comparisons, setComparisons] = useState<Comparison[]>([]);
+  const [loaded, setLoaded] = useState(false);
   // Re-derived when the display basis changes, without reloading from storage.
   const cards: ComparisonCardModel[] = useMemo(
     () => buildComparisonCards(comparisons, basis),
@@ -26,7 +27,9 @@ export function HomeContainer() {
       comparisonRepository
         .list()
         .then((list) => {
-          if (active) setComparisons(list);
+          if (!active) return;
+          setComparisons(list);
+          setLoaded(true);
         })
         .catch(() => {
           // Corrupt storage throws in the repository; Home shows no cards meanwhile.
@@ -37,5 +40,11 @@ export function HomeContainer() {
     }, []),
   );
 
-  return <HomeScene cards={cards} onOpenComparison={(id) => router.push(`/compare/${id}`)} />;
+  return (
+    <HomeScene
+      cards={cards}
+      loaded={loaded}
+      onOpenComparison={(id) => router.push(`/compare/${id}`)}
+    />
+  );
 }
