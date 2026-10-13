@@ -1,5 +1,6 @@
 import { randomUUID } from 'expo-crypto';
 
+import { clearAllData as clearStorage } from './clear-all-data';
 import type { ComparisonRepository } from './comparison.repository';
 import { KeyValueComparisonRepository } from './kv-comparison.repository';
 import { KeyValueSettingsRepository } from './kv-settings.repository';
@@ -21,7 +22,7 @@ export const settingsRepository: SettingsRepository = new KeyValueSettingsReposi
 
 // "Apagar todos os dados" (S.1): one call wipes comparisons, history and settings together.
 export async function clearAllData(): Promise<void> {
-  storage.clearAll();
+  return clearStorage(storage);
 }
 
 export type { ComparisonRepository, SettingsRepository };
