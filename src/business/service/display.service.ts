@@ -64,6 +64,26 @@ export function priceForDisplay(entry: PriceEntry, basis: DisplayBasis): Display
   return unitPriceForBasis(pricePerBaseUnitOfEntry(entry), basis);
 }
 
+export type EntryDisplayPrice = {
+  /** Cents, not rounded. */
+  cents: number;
+  /** The price is for this many `unit`s: "R$ 4,98 / kg", "R$ 0,50 / 100 g", "R$ 24,90 / 5 kg". */
+  quantity: number;
+  unit: Unit;
+};
+
+/**
+ * priceForDisplay in one shape for the screens: the price plus the size it refers to.
+ * On the 'unit' basis that size is the package as typed (5 kg), otherwise 1 kg / 100 g...
+ */
+export function entryDisplayPrice(entry: PriceEntry, basis: DisplayBasis): EntryDisplayPrice {
+  const price = priceForDisplay(entry, basis);
+  if (price.kind === 'package') {
+    return { cents: price.cents, quantity: entry.quantity, unit: entry.unit };
+  }
+  return { cents: price.cents, quantity: price.quantity, unit: price.unit };
+}
+
 /**
  * Rounds cents for display, separate from the stored precision.
  * roundCents true -> whole cents (R$ 4,98); false -> keeps `extraDigits` (default 2) decimals

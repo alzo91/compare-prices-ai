@@ -1,10 +1,10 @@
 import { compareEntries } from '@/business/service/compare.service';
-import { roundCentsForDisplay } from '@/business/service/display.service';
-import { pricePerBaseUnitOfEntry } from '@/business/service/price.service';
+import { entryDisplayPrice, roundCentsForDisplay } from '@/business/service/display.service';
 import { computeSavings } from '@/business/service/savings.service';
 import type { ComparisonCardModel } from '@/components/organism/comparison-card';
 import type { Comparison } from '@/models/Comparison';
 import type { PriceEntry } from '@/models/PriceEntry';
+import type { DisplayBasis } from '@/models/Settings';
 
 // Distinct package sizes as typed, in input order ("250 g", "500 g").
 function distinctSizes(entries: readonly PriceEntry[]) {
@@ -19,9 +19,12 @@ function distinctSizes(entries: readonly PriceEntry[]) {
   return sizes;
 }
 
-// Maps a saved comparison to its Home card. Returns null when the entries cannot be compared
+// Maps a saved comparison to its Home card, with the price on the chosen display basis. Returns null when the entries cannot be compared
 // (no entries, mixed measurement types, invalid numbers): such a card has no price to show.
-export function buildComparisonCard(comparison: Comparison): ComparisonCardModel | null {
+export function buildComparisonCard(
+  comparison: Comparison,
+  basis: DisplayBasis = 'base',
+): ComparisonCardModel | null {
   const { entries } = comparison;
   if (entries.length === 0) return null;
 
@@ -32,13 +35,14 @@ export function buildComparisonCard(comparison: Comparison): ComparisonCardModel
     const bestId = result ? result.cheapestIds[0] : entries[0].id;
     const bestIndex = entries.findIndex((e) => e.id === bestId);
     const best = entries[bestIndex];
-    const unitPrice = pricePerBaseUnitOfEntry(best);
+    const price = entryDisplayPrice(best, basis);
 
     return {
       id: comparison.id,
       name: comparison.product.name,
-      unitPriceCents: roundCentsForDisplay(unitPrice.centsPerBaseUnit, true),
-      baseUnit: unitPrice.baseUnit,
+      unitPriceCents: roundCentsForDisplay(price.cents, true),
+      priceQuantity: price.quantity,
+      priceUnit: price.unit,
       best: { quantity: best.quantity, unit: best.unit, priceCents: best.priceCents },
       pricesCount: entries.length,
       summary: savings
@@ -50,6 +54,9 @@ export function buildComparisonCard(comparison: Comparison): ComparisonCardModel
   }
 }
 
-export function buildComparisonCards(comparisons: readonly Comparison[]): ComparisonCardModel[] {
-  return comparisons.flatMap((c) => buildComparisonCard(c) ?? []);
+export function buildComparisonCards(
+  comparisons: readonly Comparison[],
+  basis: DisplayBasis = 'base',
+): ComparisonCardModel[] {
+  return comparisons.flatMap((c) => buildComparisonCard(c, basis) ?? []);
 }

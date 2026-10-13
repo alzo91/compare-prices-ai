@@ -11,7 +11,8 @@ const meta = {
       id: '1',
       name: 'Arroz branco tipo 1',
       unitPriceCents: 498,
-      baseUnit: 'kg',
+      priceQuantity: 1,
+      priceUnit: 'kg',
       best: { quantity: 5, unit: 'kg', priceCents: 2490 },
       pricesCount: 5,
       summary: { kind: 'savings', winnerRow: 1, savingsCents: 640 },
@@ -29,7 +30,8 @@ export const Packages: Story = {
       id: '3',
       name: 'Café torrado e moído',
       unitPriceCents: 3190,
-      baseUnit: 'kg',
+      priceQuantity: 1,
+      priceUnit: 'kg',
       best: { quantity: 500, unit: 'g', priceCents: 1595 },
       pricesCount: 6,
       summary: {
@@ -39,6 +41,21 @@ export const Packages: Story = {
           { quantity: 500, unit: 'g' },
         ],
       },
+    },
+  },
+};
+
+export const Per100g: Story = {
+  args: {
+    comparison: {
+      id: '4',
+      name: 'Arroz branco tipo 1',
+      unitPriceCents: 50,
+      priceQuantity: 100,
+      priceUnit: 'g',
+      best: { quantity: 5, unit: 'kg', priceCents: 2490 },
+      pricesCount: 5,
+      summary: { kind: 'savings', winnerRow: 1, savingsCents: 640 },
     },
   },
 };

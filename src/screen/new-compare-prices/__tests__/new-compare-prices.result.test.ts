@@ -24,8 +24,9 @@ describe('buildResultCard', () => {
       'pt-BR',
     );
     expect(card).toMatchObject({
-      centsPerBaseUnit: 498,
-      baseUnit: 'kg',
+      priceCents: 498,
+      priceQuantity: 1,
+      priceUnit: 'kg',
       cheapestRows: [1],
       winner: { priceCents: 2490, quantity: 5, unit: 'kg' },
     });
@@ -38,7 +39,7 @@ describe('buildResultCard', () => {
       'pt-BR',
     );
     expect(card?.cheapestRows).toEqual([1]);
-    expect(card?.centsPerBaseUnit).toBe(498);
+    expect(card?.priceCents).toBe(498);
   });
 
   it('numbers rows by form position', () => {
@@ -52,7 +53,7 @@ describe('buildResultCard', () => {
   it('converts units before comparing', () => {
     const card = buildResultCard([row('a', '10', '1'), row('b', '3', '500', 'g')], 'pt-BR');
     expect(card?.cheapestRows).toEqual([2]);
-    expect(card?.centsPerBaseUnit).toBe(600);
+    expect(card?.priceCents).toBe(600);
     expect(card?.savings?.percent).toBe(40);
     expect(card?.savings?.differenceCents).toBe(200);
   });
@@ -73,5 +74,24 @@ describe('buildResultCard', () => {
   it('parses en-US input', () => {
     const card = buildResultCard([row('a', '24.90', '5'), row('b', '12.20', '1')], 'en-US');
     expect(card?.cheapestRows).toEqual([1]);
+  });
+
+  it('honors the display basis', () => {
+    const rows = [row('a', '24,90', '5'), row('b', '30,50', '5')];
+    expect(buildResultCard(rows, 'pt-BR', 'base')).toMatchObject({
+      priceCents: 498,
+      priceQuantity: 1,
+      priceUnit: 'kg',
+    });
+    expect(buildResultCard(rows, 'pt-BR', 'per100')).toMatchObject({
+      priceCents: 50,
+      priceQuantity: 100,
+      priceUnit: 'g',
+    });
+    expect(buildResultCard(rows, 'pt-BR', 'unit')).toMatchObject({
+      priceCents: 2490,
+      priceQuantity: 5,
+      priceUnit: 'kg',
+    });
   });
 });

@@ -1,7 +1,12 @@
 import type { PriceEntry } from '@/models/PriceEntry';
 import type { Unit } from '@/models/Unit';
 
-import { priceForDisplay, roundCentsForDisplay, unitPriceForBasis } from '../display.service';
+import {
+  entryDisplayPrice,
+  priceForDisplay,
+  roundCentsForDisplay,
+  unitPriceForBasis,
+} from '../display.service';
 import { pricePerBaseUnit } from '../price.service';
 
 const entry = (priceCents: number, quantity: number, unit: Unit): PriceEntry => ({
@@ -77,5 +82,29 @@ describe('roundCentsForDisplay', () => {
     expect(roundCentsForDisplay(416.66666667, false)).toBe(416.67);
     expect(roundCentsForDisplay(45.9, false)).toBe(45.9);
     expect(roundCentsForDisplay(416.66666667, false, 3)).toBe(416.667);
+  });
+});
+
+describe('entryDisplayPrice', () => {
+  it('base: price and size per 1 kg / L / m', () => {
+    expect(entryDisplayPrice(entry(2490, 5, 'kg'), 'base')).toEqual({
+      cents: 498,
+      quantity: 1,
+      unit: 'kg',
+    });
+  });
+
+  it('per100: price and size per 100 g / mL / cm', () => {
+    const price = entryDisplayPrice(entry(2490, 5, 'kg'), 'per100');
+    expect(price.cents).toBeCloseTo(49.8, 6);
+    expect(price).toMatchObject({ quantity: 100, unit: 'g' });
+  });
+
+  it('unit: the package as typed, price unchanged', () => {
+    expect(entryDisplayPrice(entry(360, 500, 'g'), 'unit')).toEqual({
+      cents: 360,
+      quantity: 500,
+      unit: 'g',
+    });
   });
 });
