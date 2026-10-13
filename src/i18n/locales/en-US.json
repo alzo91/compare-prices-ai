@@ -22,7 +22,11 @@
     "best": "Best",
     "pricesCount_one": "{{count}} price",
     "pricesCount_other": "{{count}} prices",
-    "cheapestSummary": "price {{index}} is the cheapest · you save {{savings}}"
+    "cheapestSummary": "price {{index}} is the cheapest · you save {{savings}}",
+    "packageSize": "{{size}} package",
+    "packagesOf": "packages of {{sizes}}",
+    "listAnd": " and ",
+    "openComparison": "Open comparison {{name}}"
   },
   "newComparison": {
     "title": "New comparison",
