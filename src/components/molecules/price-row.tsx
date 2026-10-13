@@ -1,5 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
+import { Badge } from '@/components/atoms/badge';
 import { Card } from '@/components/atoms/card';
 import { FieldError } from '@/components/atoms/field-error';
 import { Icon } from '@/components/atoms/icon';
@@ -24,6 +25,8 @@ export type PriceRowProps = {
   currencySymbol: string;
   // Sálvia card + sálvia selected pill (cheapest price, task 4.4).
   highlight?: boolean;
+  // Shows the "Mais barato" badge (a single winner, never on a tie).
+  cheapest?: boolean;
   onChangePrice: (text: string) => void;
   onChangeQuantity: (text: string) => void;
   onChangeUnit: (unit: Unit) => void;
@@ -45,6 +48,7 @@ export function PriceRow({
   unit,
   currencySymbol,
   highlight = false,
+  cheapest = false,
   onChangePrice,
   onChangeQuantity,
   onChangeUnit,
@@ -69,9 +73,12 @@ export function PriceRow({
   return (
     <Card tone={highlight ? 'highlight' : 'default'} style={styles.card}>
       <View style={styles.header}>
-        <Text variant="caption" color="textMuted">
-          {t('newComparison.priceN', { index })}
-        </Text>
+        <View style={styles.title}>
+          <Text variant="caption" color={highlight ? 'accent2Strong' : 'textMuted'}>
+            {t('newComparison.priceN', { index })}
+          </Text>
+          {cheapest ? <Badge tone="cheapest" label={t('newComparison.cheapest')} /> : null}
+        </View>
         {onRemove ? (
           <Pressable
             accessibilityRole="button"
@@ -144,6 +151,7 @@ export function PriceRow({
 const styles = StyleSheet.create({
   card: { gap: 12 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  title: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   // Fixed-size target (negative margin keeps the header height unchanged).
   remove: {
     width: MIN_TOUCH_TARGET,
