@@ -24,6 +24,11 @@ export function ResultCard({ result }: ResultCardProps) {
   const quantityLabel = (quantity: number, unit: Unit) =>
     `${formatNumber(quantity)} ${unitLabel(unit)}`;
 
+  const unitSuffix =
+    result.priceQuantity === 1
+      ? `/${unitLabel(result.priceUnit)}`
+      : `/${quantityLabel(result.priceQuantity, result.priceUnit)}`;
+
   const { winner, savings, cheapestRows } = result;
   const headline = winner
     ? t('newComparison.resultWinner', {
@@ -45,7 +50,7 @@ export function ResultCard({ result }: ResultCardProps) {
       // One screen-reader element: the colour alone never says "cheapest".
       accessibilityLabel={[
         t('newComparison.result'),
-        `${formatCents(result.centsPerBaseUnit)}/${unitLabel(result.baseUnit)}`,
+        `${formatCents(result.priceCents)}${unitSuffix}`,
         headline,
         savings && `${savings.percent}% ${savingsDetail}`,
       ]
@@ -58,10 +63,10 @@ export function ResultCard({ result }: ResultCardProps) {
       </Text>
       <View style={styles.priceRow}>
         <Text variant="display" color="accent2Strong" style={styles.price}>
-          {formatCents(result.centsPerBaseUnit)}
+          {formatCents(result.priceCents)}
         </Text>
         <Text variant="subtitle" color="accent2Strong" style={styles.unit}>
-          /{unitLabel(result.baseUnit)}
+          {unitSuffix}
         </Text>
       </View>
       <Text color="accent2Strong">{headline}</Text>

@@ -21,9 +21,11 @@ export type ComparisonCardSummary =
 export type ComparisonCardModel = {
   id: string;
   name: string;
-  // Lowest price per base unit in whole cents, e.g. 498 for R$ 4,98/kg.
+  // Best price on the display basis, in whole cents: 498 for R$ 4,98 / 1 kg,
+  // 50 for R$ 0,50 / 100 g, 2490 for R$ 24,90 / 5 kg (per package).
   unitPriceCents: number;
-  baseUnit: Unit;
+  priceQuantity: number;
+  priceUnit: Unit;
   // The best entry as typed: "5 kg · R$ 24,90".
   best: { quantity: number; unit: Unit; priceCents: number };
   pricesCount: number;
@@ -60,7 +62,10 @@ export function ComparisonCard({ comparison, onPress }: ComparisonCardProps) {
         : t('home.packagesOf', { sizes: sizes.join(t('home.listAnd')) });
   }
   const unitPrice = formatCents(comparison.unitPriceCents);
-  const unitSuffix = `/${unitLabel(comparison.baseUnit)}`;
+  const unitSuffix =
+    comparison.priceQuantity === 1
+      ? `/${unitLabel(comparison.priceUnit)}`
+      : `/${sizeLabel(comparison.priceQuantity, comparison.priceUnit)}`;
   const pricesText = t('home.pricesCount', { count: comparison.pricesCount });
   const bestText = `${sizeLabel(best.quantity, best.unit)} · ${formatCents(best.priceCents)}`;
 

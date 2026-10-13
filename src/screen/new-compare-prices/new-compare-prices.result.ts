@@ -1,10 +1,9 @@
 import { compareEntries } from '@/business/service/compare.service';
-import { roundCentsForDisplay } from '@/business/service/display.service';
+import { entryDisplayPrice, roundCentsForDisplay } from '@/business/service/display.service';
 import { validateRow } from '@/business/service/input.service';
 import { computeSavings } from '@/business/service/savings.service';
-import { getBaseUnit } from '@/business/service/unit.service';
 import type { PriceEntry } from '@/models/PriceEntry';
-import type { Language } from '@/models/Settings';
+import type { DisplayBasis, Language } from '@/models/Settings';
 import type { Unit } from '@/models/Unit';
 
 import type { PriceRowDraft } from './new-compare-prices.form';
@@ -19,9 +18,11 @@ export type ResultSavings = {
 };
 
 export type ResultCardModel = {
-  // Lowest price per base unit, in whole cents (R$ 4,98 / kg).
-  centsPerBaseUnit: number;
-  baseUnit: Unit;
+  // Cheapest price on the display basis, in whole cents, for `priceQuantity` `priceUnit`s:
+  // R$ 4,98 / 1 kg, R$ 0,50 / 100 g or (basis 'unit') R$ 24,90 / 5 kg.
+  priceCents: number;
+  priceQuantity: number;
+  priceUnit: Unit;
   // 1-based position of every cheapest row; more than one means a tie.
   cheapestRows: number[];
   // The single winner's row as typed; null on a tie.
@@ -35,6 +36,7 @@ export type ResultCardModel = {
 export function buildResultCard(
   rows: readonly PriceRowDraft[],
   language: Language,
+  basis: DisplayBasis = 'base',
 ): ResultCardModel | null {
   const entries: PriceEntry[] = [];
   const rowNumbers = new Map<string, number>();
@@ -55,9 +57,13 @@ export function buildResultCard(
     const comparison = compareEntries(entries);
     const savings = computeSavings(entries, comparison);
     const winner = entries.find((e) => e.id === comparison.winnerId);
+    // The first cheapest row stands for the price (ties cost the same per unit).
+    const best = entries.find((e) => e.id === comparison.cheapestIds[0]) as PriceEntry;
+    const price = entryDisplayPrice(best, basis);
     return {
-      centsPerBaseUnit: roundCentsForDisplay(comparison.cheapestCentsPerBaseUnit, true),
-      baseUnit: getBaseUnit(entries[0].unit),
+      priceCents: roundCentsForDisplay(price.cents, true),
+      priceQuantity: price.quantity,
+      priceUnit: price.unit,
       cheapestRows: comparison.cheapestIds.map((id) => rowNumbers.get(id) as number),
       winner: winner
         ? { priceCents: winner.priceCents, quantity: winner.quantity, unit: winner.unit }

@@ -3,12 +3,14 @@ import { Alert } from 'react-native';
 
 import { clearAllData } from '@/business/repository';
 import { useI18n } from '@/i18n';
+import { displayBasisStore, useDisplayBasis } from '@/store/useDisplayBasis';
 
 import { SettingsScene } from './settings.scene';
 
-// Container: settings store wiring comes with Epic 7.
+// Container: wires the settings controls to the store / repository.
 export function SettingsContainer() {
   const { t } = useI18n();
+  const displayBasis = useDisplayBasis();
 
   const confirmDeleteAllData = () => {
     Alert.alert(t('settings.deleteAllDataTitle'), t('settings.deleteAllDataMessage'), [
@@ -17,7 +19,8 @@ export function SettingsContainer() {
         text: t('settings.deleteAllDataConfirm'),
         style: 'destructive',
         onPress: () => {
-          void clearAllData();
+          // Wiping resets settings in storage; bring the in-memory copy back to the defaults.
+          void clearAllData().then(() => displayBasisStore.load());
         },
       },
     ]);
@@ -25,6 +28,8 @@ export function SettingsContainer() {
 
   return (
     <SettingsScene
+      displayBasis={displayBasis}
+      onChangeDisplayBasis={(basis) => void displayBasisStore.setBasis(basis)}
       onOpenAbout={() => router.push('/about')}
       onDeleteAllData={confirmDeleteAllData}
     />

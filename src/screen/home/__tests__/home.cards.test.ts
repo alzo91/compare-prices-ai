@@ -32,7 +32,8 @@ describe('buildComparisonCard', () => {
     expect(card).toMatchObject({
       id: 'id-Arroz branco tipo 1',
       name: 'Arroz branco tipo 1',
-      baseUnit: 'kg',
+      priceQuantity: 1,
+      priceUnit: 'kg',
       pricesCount: 5,
     });
   });
@@ -80,7 +81,7 @@ describe('buildComparisonCard', () => {
     const card = buildComparisonCard(comparison('Leite', [entry('a', 449, 1, 'L')]));
     expect(card).toMatchObject({
       unitPriceCents: 449,
-      baseUnit: 'L',
+      priceUnit: 'L',
       pricesCount: 1,
       summary: { kind: 'packages', sizes: [{ quantity: 1, unit: 'L' }] },
     });
@@ -91,6 +92,40 @@ describe('buildComparisonCard', () => {
     expect(
       buildComparisonCard(comparison('Misto', [entry('a', 100, 1, 'kg'), entry('b', 100, 1, 'L')])),
     ).toBeNull();
+  });
+});
+
+describe('buildComparisonCard display basis', () => {
+  const rice = comparison('Arroz', [entry('a', 3050, 5, 'kg'), entry('b', 2490, 5, 'kg')]);
+
+  it('base (default): per kg', () => {
+    expect(buildComparisonCard(rice)).toMatchObject({
+      unitPriceCents: 498,
+      priceQuantity: 1,
+      priceUnit: 'kg',
+    });
+  });
+
+  it('per100: per 100 g', () => {
+    expect(buildComparisonCard(rice, 'per100')).toMatchObject({
+      unitPriceCents: 50,
+      priceQuantity: 100,
+      priceUnit: 'g',
+    });
+  });
+
+  it('unit: the best package price as entered', () => {
+    expect(buildComparisonCard(rice, 'unit')).toMatchObject({
+      unitPriceCents: 2490,
+      priceQuantity: 5,
+      priceUnit: 'kg',
+    });
+  });
+
+  it('never changes the stored entries', () => {
+    const before = JSON.stringify(rice);
+    buildComparisonCard(rice, 'per100');
+    expect(JSON.stringify(rice)).toBe(before);
   });
 });
 

@@ -11,6 +11,18 @@ export const styles = StyleSheet.create({
     fontWeight: '800',
     marginTop: 24,
   },
+  group: {
+    gap: 12,
+  },
+  eyebrow: {
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  pills: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
