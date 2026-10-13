@@ -73,7 +73,11 @@
     "currencyUSD": "US dollar ($)",
     "language": "Language",
     "about": "About the app",
-    "deleteAllData": "Delete all data"
+    "deleteAllData": "Delete all data",
+    "deleteAllDataTitle": "Delete all data?",
+    "deleteAllDataMessage": "This permanently deletes all your comparisons and price history, and resets your settings. This cannot be undone.",
+    "deleteAllDataCancel": "Cancel",
+    "deleteAllDataConfirm": "Delete everything"
   },
   "about": {
     "title": "About the app",

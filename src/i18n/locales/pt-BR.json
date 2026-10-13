@@ -73,7 +73,11 @@
     "currencyUSD": "Dólar (US$)",
     "language": "Idioma",
     "about": "Sobre o app",
-    "deleteAllData": "Apagar todos os dados"
+    "deleteAllData": "Apagar todos os dados",
+    "deleteAllDataTitle": "Apagar todos os dados?",
+    "deleteAllDataMessage": "Isso apaga permanentemente todas as suas comparações e o histórico de preços, e restaura os ajustes padrão. Não é possível desfazer.",
+    "deleteAllDataCancel": "Cancelar",
+    "deleteAllDataConfirm": "Apagar tudo"
   },
   "about": {
     "title": "Sobre o app",

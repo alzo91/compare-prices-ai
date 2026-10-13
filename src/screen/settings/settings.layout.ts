@@ -22,4 +22,12 @@ export const styles = StyleSheet.create({
   rowLabel: {
     fontSize: 17,
   },
+  deleteButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  deleteLabel: {
+    fontSize: 17,
+  },
 });

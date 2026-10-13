@@ -9,9 +9,10 @@ import { styles } from './settings.layout';
 
 type SettingsSceneProps = {
   onOpenAbout: () => void;
+  onDeleteAllData: () => void;
 };
 
-export function SettingsScene({ onOpenAbout }: SettingsSceneProps) {
+export function SettingsScene({ onOpenAbout, onDeleteAllData }: SettingsSceneProps) {
   const { colors } = useTheme();
   const { t } = useI18n();
   return (
@@ -31,6 +32,11 @@ export function SettingsScene({ onOpenAbout }: SettingsSceneProps) {
           color={colors.textMuted}
           size={18}
         />
+      </Pressable>
+      <Pressable accessibilityRole="button" onPress={onDeleteAllData} style={styles.deleteButton}>
+        <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
+          {t('settings.deleteAllData')}
+        </Text>
       </Pressable>
     </SafeAreaView>
   );
