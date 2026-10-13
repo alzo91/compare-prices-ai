@@ -1,6 +1,6 @@
 import { isRowValid, validateRow, type RowDraft } from '@/business/service/input.service';
 import { getMeasurementType } from '@/business/service/unit.service';
-import type { ComparisonInput } from '@/models/Comparison';
+import type { Comparison, ComparisonInput } from '@/models/Comparison';
 import type { PriceEntry } from '@/models/PriceEntry';
 import type { Language } from '@/models/Settings';
 import type { Unit } from '@/models/Unit';
@@ -94,4 +94,23 @@ export function buildComparisonInput(
   }
   if (new Set(entries.map((e) => getMeasurementType(e.unit))).size > 1) return null;
   return { product: { name: productName.trim() }, entries };
+}
+
+// ---- Detail / edit (task 6.1) ----
+
+// Text as the user would type it: the language's decimal mark, no thousands groups.
+const withDecimalMark = (text: string, language: Language): string =>
+  language === 'pt-BR' ? text.replace('.', ',') : text;
+
+// Saved comparison -> form rows. Entry ids are kept, and nextId moves past every "row-N" id
+// so rows added while editing never collide with a saved one.
+export function rowsFromComparison(comparison: Comparison, language: Language): RowsState {
+  const rows: PriceRowDraft[] = comparison.entries.map((entry) => ({
+    id: entry.id,
+    price: withDecimalMark((entry.priceCents / 100).toFixed(2), language),
+    quantity: withDecimalMark(String(entry.quantity), language),
+    unit: entry.unit,
+  }));
+  const used = rows.map((row) => Number(/^row-(\d+)$/.exec(row.id)?.[1] ?? 0));
+  return { rows, nextId: Math.max(rows.length, ...used) + 1 };
 }
