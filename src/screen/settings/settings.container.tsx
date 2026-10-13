@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { clearAllData } from '@/business/repository';
 import { useI18n } from '@/i18n';
 import { displayBasisStore, useDisplayBasis } from '@/store/useDisplayBasis';
+import { roundCentsStore, useRoundCents } from '@/store/useRoundCents';
 
 import { SettingsScene } from './settings.scene';
 
@@ -11,6 +12,7 @@ import { SettingsScene } from './settings.scene';
 export function SettingsContainer() {
   const { t } = useI18n();
   const displayBasis = useDisplayBasis();
+  const roundCents = useRoundCents();
 
   const confirmDeleteAllData = () => {
     Alert.alert(t('settings.deleteAllDataTitle'), t('settings.deleteAllDataMessage'), [
@@ -20,7 +22,9 @@ export function SettingsContainer() {
         style: 'destructive',
         onPress: () => {
           // Wiping resets settings in storage; bring the in-memory copy back to the defaults.
-          void clearAllData().then(() => displayBasisStore.load());
+          void clearAllData().then(() =>
+            Promise.all([displayBasisStore.load(), roundCentsStore.load()]),
+          );
         },
       },
     ]);
@@ -30,6 +34,8 @@ export function SettingsContainer() {
     <SettingsScene
       displayBasis={displayBasis}
       onChangeDisplayBasis={(basis) => void displayBasisStore.setBasis(basis)}
+      roundCents={roundCents}
+      onChangeRoundCents={(value) => void roundCentsStore.setEnabled(value)}
       onOpenAbout={() => router.push('/about')}
       onDeleteAllData={confirmDeleteAllData}
     />

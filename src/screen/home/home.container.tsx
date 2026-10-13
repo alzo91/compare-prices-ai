@@ -5,6 +5,7 @@ import { comparisonRepository } from '@/business/repository';
 import type { ComparisonCardModel } from '@/components/organism/comparison-card';
 import type { Comparison } from '@/models/Comparison';
 import { useDisplayBasis } from '@/store/useDisplayBasis';
+import { useRoundCents } from '@/store/useRoundCents';
 
 import { buildComparisonCards } from './home.cards';
 import { HomeScene } from './home.scene';
@@ -12,12 +13,13 @@ import { HomeScene } from './home.scene';
 // Container: loads saved comparisons and handles navigation.
 export function HomeContainer() {
   const basis = useDisplayBasis();
+  const roundCents = useRoundCents();
   const [comparisons, setComparisons] = useState<Comparison[]>([]);
   const [loaded, setLoaded] = useState(false);
   // Re-derived when the display basis changes, without reloading from storage.
   const cards: ComparisonCardModel[] = useMemo(
-    () => buildComparisonCards(comparisons, basis),
-    [comparisons, basis],
+    () => buildComparisonCards(comparisons, basis, roundCents),
+    [comparisons, basis, roundCents],
   );
 
   // Tabs stay mounted, so reload every time Home regains focus (e.g. after saving a comparison).

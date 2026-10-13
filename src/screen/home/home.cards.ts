@@ -1,5 +1,9 @@
 import { compareEntries } from '@/business/service/compare.service';
-import { entryDisplayPrice, roundCentsForDisplay } from '@/business/service/display.service';
+import {
+  entryDisplayPrice,
+  roundCentsForDisplay,
+  roundToWholeUnits,
+} from '@/business/service/display.service';
 import { computeSavings } from '@/business/service/savings.service';
 import type { ComparisonCardModel } from '@/components/organism/comparison-card';
 import type { Comparison } from '@/models/Comparison';
@@ -24,6 +28,7 @@ function distinctSizes(entries: readonly PriceEntry[]) {
 export function buildComparisonCard(
   comparison: Comparison,
   basis: DisplayBasis = 'base',
+  roundCents = false,
 ): ComparisonCardModel | null {
   const { entries } = comparison;
   if (entries.length === 0) return null;
@@ -40,7 +45,10 @@ export function buildComparisonCard(
     return {
       id: comparison.id,
       name: comparison.product.name,
-      unitPriceCents: roundCentsForDisplay(price.cents, true),
+      unitPriceCents: roundCents
+        ? roundToWholeUnits(price.cents)
+        : roundCentsForDisplay(price.cents, true),
+      ...(roundCents && { wholeUnits: true }),
       priceQuantity: price.quantity,
       priceUnit: price.unit,
       best: { quantity: best.quantity, unit: best.unit, priceCents: best.priceCents },
@@ -57,6 +65,7 @@ export function buildComparisonCard(
 export function buildComparisonCards(
   comparisons: readonly Comparison[],
   basis: DisplayBasis = 'base',
+  roundCents = false,
 ): ComparisonCardModel[] {
-  return comparisons.flatMap((c) => buildComparisonCard(c, basis) ?? []);
+  return comparisons.flatMap((c) => buildComparisonCard(c, basis, roundCents) ?? []);
 }

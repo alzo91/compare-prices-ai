@@ -95,3 +95,11 @@ export function roundCentsForDisplay(cents: number, roundCents: boolean, extraDi
   const factor = roundCents ? 1 : 10 ** extraDigits;
   return Math.round(clean * factor) / factor;
 }
+
+/**
+ * "Arredondar centavos" setting: rounds a price to whole currency units for display
+ * (498 cents -> 500, i.e. "R$ 5" instead of "R$ 4,98"). Half rounds up; stored values are untouched.
+ */
+export function roundToWholeUnits(cents: number): number {
+  return Math.round(Number(cents.toPrecision(12)) / 100) * 100;
+}

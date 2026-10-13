@@ -10,6 +10,8 @@ import { useTheme } from '@/theme/useTheme';
 import type { ResultCardModel } from './new-compare-prices.result';
 import { styles } from './result-card.layout';
 
+const NO_CENTS = { minimumFractionDigits: 0, maximumFractionDigits: 0 };
+
 type ResultCardProps = {
   result: ResultCardModel;
 };
@@ -50,7 +52,7 @@ export function ResultCard({ result }: ResultCardProps) {
       // One screen-reader element: the colour alone never says "cheapest".
       accessibilityLabel={[
         t('newComparison.result'),
-        `${formatCents(result.priceCents)}${unitSuffix}`,
+        `${formatCents(result.priceCents, result.wholeUnits ? NO_CENTS : undefined)}${unitSuffix}`,
         headline,
         savings && `${savings.percent}% ${savingsDetail}`,
       ]
@@ -63,7 +65,7 @@ export function ResultCard({ result }: ResultCardProps) {
       </Text>
       <View style={styles.priceRow}>
         <Text variant="display" color="accent2Strong" style={styles.price}>
-          {formatCents(result.priceCents)}
+          {formatCents(result.priceCents, result.wholeUnits ? NO_CENTS : undefined)}
         </Text>
         <Text variant="subtitle" color="accent2Strong" style={styles.unit}>
           {unitSuffix}
