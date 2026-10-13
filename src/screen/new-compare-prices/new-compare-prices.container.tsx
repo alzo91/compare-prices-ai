@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { comparisonRepository } from '@/business/repository';
 
@@ -21,8 +21,10 @@ import {
   canRemoveRow,
   createInitialRows,
   removeRow,
+  rowsFromComparison,
   updateRow,
 } from './new-compare-prices.form';
+import { ComparisonLoadStatus } from './comparison-load-status';
 import { buildResultCard } from './new-compare-prices.result';
 import { numberErrorKey, productNameErrorKey, unitErrorKey } from './new-compare-prices.messages';
 import { NewComparePricesScene } from './new-compare-prices.scene';
@@ -42,6 +44,34 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
 
   const [productName, setProductName] = useState('');
   const [rowsState, setRowsState] = useState(createInitialRows);
+  // Edit mode (task 6.1): load the saved comparison once and pre-fill the form.
+  const [loadState, setLoadState] = useState<'loading' | 'ready' | 'notFound' | 'failed'>(
+    comparisonId ? 'loading' : 'ready',
+  );
+  useEffect(() => {
+    if (!comparisonId) return;
+    let active = true;
+    comparisonRepository
+      .get(comparisonId)
+      .then((saved) => {
+        if (!active) return;
+        if (!saved) {
+          setLoadState('notFound');
+          return;
+        }
+        setProductName(saved.product.name);
+        setRowsState(rowsFromComparison(saved, language));
+        setLoadState('ready');
+      })
+      .catch(() => {
+        if (active) setLoadState('failed');
+      });
+    return () => {
+      active = false;
+    };
+    // Once per id: a later language change must not overwrite the user's edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comparisonId]);
   const [touched, setTouched] = useState<Touched>({});
   const rows = rowsState.rows.map((row) => {
     const e = visibleRowErrors(row.id, row, touched, language);
@@ -79,6 +109,10 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       setSaving(false);
     }
   };
+
+  if (loadState !== 'ready') {
+    return <ComparisonLoadStatus title={title} state={loadState} onClose={() => router.back()} />;
+  }
 
   return (
     <NewComparePricesScene
