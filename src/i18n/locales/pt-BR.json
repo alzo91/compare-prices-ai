@@ -22,7 +22,11 @@
     "best": "Melhor",
     "pricesCount_one": "{{count}} preço",
     "pricesCount_other": "{{count}} preços",
-    "cheapestSummary": "preço {{index}} é o mais barato · economia de {{savings}}"
+    "cheapestSummary": "preço {{index}} é o mais barato · economia de {{savings}}",
+    "packageSize": "embalagem de {{size}}",
+    "packagesOf": "pacotes de {{sizes}}",
+    "listAnd": " e ",
+    "openComparison": "Abrir comparação {{name}}"
   },
   "newComparison": {
     "title": "Nova comparação",
