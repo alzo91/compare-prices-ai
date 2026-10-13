@@ -2,6 +2,7 @@ import { UNIT_OPTIONS } from '@/components/molecules/price-row.units';
 
 import {
   addRow,
+  buildComparisonInput,
   canRemoveRow,
   createInitialRows,
   isFormValid,
@@ -79,6 +80,37 @@ describe('isFormValid', () => {
   it('parses with the active language', () => {
     const en = { productName: 'Rice', row: { price: '4.59', quantity: '1,5', unit: 'L' as const } };
     expect(isFormValid(en, 'en-US')).toBe(true);
+  });
+});
+
+describe('buildComparisonInput', () => {
+  const filled = () => {
+    let state = createInitialRows();
+    state = updateRow(state, 'row-1', { price: '24,90', quantity: '5', unit: 'kg' });
+    return updateRow(state, 'row-2', { price: '4,50', quantity: '500', unit: 'g' });
+  };
+
+  it('builds the repository input with trimmed name and cents', () => {
+    expect(buildComparisonInput('  Arroz ', filled().rows, 'pt-BR')).toEqual({
+      product: { name: 'Arroz' },
+      entries: [
+        { id: 'row-1', priceCents: 2490, quantity: 5, unit: 'kg' },
+        { id: 'row-2', priceCents: 450, quantity: 500, unit: 'g' },
+      ],
+    });
+  });
+
+  it('is null until the name and every row are valid', () => {
+    const { rows } = filled();
+    expect(buildComparisonInput(' ', rows, 'pt-BR')).toBeNull();
+    expect(buildComparisonInput('Arroz', createInitialRows().rows, 'pt-BR')).toBeNull();
+    expect(buildComparisonInput('Arroz', [rows[0]], 'pt-BR')).toBeNull();
+    expect(buildComparisonInput('Arroz', addRow(filled()).rows, 'pt-BR')).toBeNull();
+  });
+
+  it('is null when units mix measurement types', () => {
+    const state = updateRow(filled(), 'row-2', { unit: 'L' });
+    expect(buildComparisonInput('Arroz', state.rows, 'pt-BR')).toBeNull();
   });
 });
 

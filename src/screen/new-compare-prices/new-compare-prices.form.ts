@@ -1,4 +1,7 @@
-import { isRowValid, type RowDraft } from '@/business/service/input.service';
+import { isRowValid, validateRow, type RowDraft } from '@/business/service/input.service';
+import { getMeasurementType } from '@/business/service/unit.service';
+import type { ComparisonInput } from '@/models/Comparison';
+import type { PriceEntry } from '@/models/PriceEntry';
 import type { Language } from '@/models/Settings';
 import type { Unit } from '@/models/Unit';
 
@@ -70,4 +73,25 @@ export function updateRow(
   patch: Partial<Pick<PriceRowDraft, 'price' | 'quantity' | 'unit'>>,
 ): RowsState {
   return { ...state, rows: state.rows.map((row) => (row.id === id ? { ...row, ...patch } : row)) };
+}
+
+// ---- Save (task 4.6) ----
+
+// What the repository stores, or null while the form is not saveable: the product name is set,
+// every row is valid (price, quantity, unit) and all units share one measurement type.
+// Prices are stored as typed (never normalized); the repository owns id and timestamps.
+export function buildComparisonInput(
+  productName: string,
+  rows: readonly PriceRowDraft[],
+  language: Language,
+): ComparisonInput | null {
+  if (!isProductNameValid(productName) || rows.length < MIN_ROW_COUNT) return null;
+  const entries: PriceEntry[] = [];
+  for (const row of rows) {
+    const v = validateRow(row, language);
+    if (!v.valid) return null;
+    entries.push({ id: row.id, priceCents: v.priceCents, quantity: v.quantity, unit: v.unit });
+  }
+  if (new Set(entries.map((e) => getMeasurementType(e.unit))).size > 1) return null;
+  return { product: { name: productName.trim() }, entries };
 }

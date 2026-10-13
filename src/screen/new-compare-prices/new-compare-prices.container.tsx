@@ -1,6 +1,8 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 
+import { comparisonRepository } from '@/business/repository';
+
 import { useFormat } from '@/i18n/format';
 import { useI18n } from '@/i18n';
 
@@ -15,9 +17,9 @@ import {
 } from './new-compare-prices.errors';
 import {
   addRow,
+  buildComparisonInput,
   canRemoveRow,
   createInitialRows,
-  isFormValid,
   removeRow,
   updateRow,
 } from './new-compare-prices.form';
@@ -32,7 +34,7 @@ type NewComparePricesContainerProps = {
 
 const CURRENCY_SYMBOL = { 'pt-BR': 'R$', 'en-US': '$' } as const;
 
-// Container: form state. Saving (4.6) comes later.
+// Container: form state and saving through the repository.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
   const { language } = useFormat();
@@ -58,8 +60,25 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
   // Recomputed on every render, i.e. on every keystroke or unit change.
   const result = buildResultCard(rowsState.rows, language);
 
-  // Will enable the Save button (task 4.6).
-  const isValid = isFormValid({ productName, row: rows[0] }, language);
+  // Enables the Save button: null until the whole form is valid.
+  const input = buildComparisonInput(productName, rowsState.rows, language);
+  const isValid = input !== null;
+  const [saving, setSaving] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
+
+  const onSave = async () => {
+    if (!input || saving) return;
+    setSaving(true);
+    setSaveFailed(false);
+    try {
+      if (comparisonId) await comparisonRepository.update(comparisonId, input);
+      else await comparisonRepository.create(input);
+      router.back(); // back to Home
+    } catch {
+      setSaveFailed(true);
+      setSaving(false);
+    }
+  };
 
   return (
     <NewComparePricesScene
@@ -68,7 +87,9 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       rows={rows}
       currencySymbol={CURRENCY_SYMBOL[language]}
       result={result}
-      isValid={isValid}
+      isValid={isValid && !saving}
+      saveError={saveFailed ? t('newComparison.saveError') : undefined}
+      onSave={onSave}
       productNameError={nameReason && t(productNameErrorKey(nameReason))}
       mixedUnits={hasMixedMeasurementTypes(rows)}
       onBlurProductName={() => setTouched((s) => touch(s, NAME_KEY))}
