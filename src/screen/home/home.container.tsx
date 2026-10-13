@@ -10,6 +10,7 @@ import { HomeScene } from './home.scene';
 // Container: loads saved comparisons and handles navigation.
 export function HomeContainer() {
   const [cards, setCards] = useState<ComparisonCardModel[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   // Tabs stay mounted, so reload every time Home regains focus (e.g. after saving a comparison).
   useFocusEffect(
@@ -18,7 +19,9 @@ export function HomeContainer() {
       comparisonRepository
         .list()
         .then((list) => {
-          if (active) setCards(buildComparisonCards(list));
+          if (!active) return;
+          setCards(buildComparisonCards(list));
+          setLoaded(true);
         })
         .catch(() => {
           // Corrupt storage throws in the repository; Home shows no cards meanwhile.
@@ -29,5 +32,11 @@ export function HomeContainer() {
     }, []),
   );
 
-  return <HomeScene cards={cards} onOpenComparison={(id) => router.push(`/compare/${id}`)} />;
+  return (
+    <HomeScene
+      cards={cards}
+      loaded={loaded}
+      onOpenComparison={(id) => router.push(`/compare/${id}`)}
+    />
+  );
 }
