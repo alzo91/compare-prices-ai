@@ -69,6 +69,33 @@ describe('KeyValueComparisonRepository', () => {
     expect(await repo.get(created.id)).toEqual(updated);
   });
 
+  it('saves an edit in place: no duplicate, rows added/removed persist, list reflects it (task 6.3)', async () => {
+    const { repo, make } = setup();
+    const other = await repo.create(input('Outro'));
+    const created = await repo.create({
+      product: { name: 'Arroz' },
+      entries: [
+        { id: 'row-1', priceCents: 100, quantity: 1, unit: 'kg' },
+        { id: 'row-2', priceCents: 200, quantity: 2, unit: 'kg' },
+        { id: 'row-3', priceCents: 300, quantity: 3, unit: 'kg' },
+      ],
+    });
+    const updated = await repo.update(created.id, {
+      product: { name: 'Arroz integral' },
+      entries: [
+        { id: 'row-1', priceCents: 150, quantity: 1, unit: 'kg' },
+        { id: 'row-2', priceCents: 200, quantity: 2, unit: 'kg' },
+        { id: 'row-4', priceCents: 900, quantity: 500, unit: 'g' },
+      ],
+    });
+    const list = await make().list();
+    expect(list).toHaveLength(2);
+    expect(list.map((c) => c.id)).toEqual([created.id, other.id]); // edited row moves to the top
+    expect(list[0]).toEqual(updated);
+    expect(list[0].entries.map((e) => e.id)).toEqual(['row-1', 'row-2', 'row-4']);
+    expect(list[1]).toEqual(other);
+  });
+
   it('throws when updating an unknown id and writes nothing', async () => {
     const { repo } = setup();
     const created = await repo.create(input('A'));
