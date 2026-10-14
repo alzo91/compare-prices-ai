@@ -60,3 +60,5 @@ extensions.json
 settings.json
 *storybook.log
 storybook-static
+
+docs/
