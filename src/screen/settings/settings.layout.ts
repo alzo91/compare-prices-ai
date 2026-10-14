@@ -3,7 +3,11 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  // Scrolls so every card and "Apagar todos os dados" stay reachable on small phones (9.4).
+  content: {
     paddingHorizontal: 24,
+    paddingBottom: 32,
     gap: 24,
   },
   title: {

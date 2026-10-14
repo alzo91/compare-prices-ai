@@ -29,6 +29,7 @@ export function LanguageSetting() {
           <Pill
             key={value}
             label={t(labelKey)}
+            size="small"
             selected={preference === value}
             onPress={() => void languageStore.setPreference(value)}
             accessibilityLabel={t('settings.language.option', { option: t(labelKey) })}
