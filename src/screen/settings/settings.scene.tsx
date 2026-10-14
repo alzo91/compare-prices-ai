@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Card } from '@/components/atoms/card';
@@ -56,62 +56,67 @@ export function SettingsScene({
       edges={['top']}
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
-      <Card style={styles.group}>
-        <AppText variant="caption" color="accent" style={styles.eyebrow}>
-          {t('settings.comparisonSection')}
-        </AppText>
-        <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.showPricePer')}</Text>
-        <View accessibilityRole="radiogroup" style={styles.pills}>
-          {BASIS_OPTIONS.map(({ value, labelKey }) => (
-            <Pill
-              key={value}
-              label={t(labelKey)}
-              selected={displayBasis === value}
-              onPress={() => onChangeDisplayBasis(value)}
-              accessibilityLabel={`${t('settings.showPricePer')}: ${t(labelKey)}`}
-            />
-          ))}
-        </View>
-      </Card>
-      <Card style={styles.toggleCard}>
-        <PriceHistorySetting value={keepPriceHistory} onValueChange={onChangeKeepPriceHistory} />
-        <View style={styles.toggleRow}>
-          <View style={styles.toggleText}>
-            <Text style={[styles.rowLabel, { color: colors.text }]}>
-              {t('settings.roundCents')}
-            </Text>
-            <AppText variant="caption" color="textMuted">
-              {hint}
-            </AppText>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
+        <Card style={styles.group}>
+          <AppText variant="caption" color="accent" style={styles.eyebrow}>
+            {t('settings.comparisonSection')}
+          </AppText>
+          <Text style={[styles.rowLabel, { color: colors.text }]}>
+            {t('settings.showPricePer')}
+          </Text>
+          <View accessibilityRole="radiogroup" style={styles.pills}>
+            {BASIS_OPTIONS.map(({ value, labelKey }) => (
+              <Pill
+                key={value}
+                label={t(labelKey)}
+                selected={displayBasis === value}
+                size="small"
+                onPress={() => onChangeDisplayBasis(value)}
+                accessibilityLabel={`${t('settings.showPricePer')}: ${t(labelKey)}`}
+              />
+            ))}
           </View>
-          <Toggle
-            value={roundCents}
-            onValueChange={onChangeRoundCents}
-            accessibilityLabel={t('settings.roundCents')}
-            accessibilityHint={hint}
+        </Card>
+        <Card style={styles.toggleCard}>
+          <PriceHistorySetting value={keepPriceHistory} onValueChange={onChangeKeepPriceHistory} />
+          <View style={styles.toggleRow}>
+            <View style={styles.toggleText}>
+              <Text style={[styles.rowLabel, { color: colors.text }]}>
+                {t('settings.roundCents')}
+              </Text>
+              <AppText variant="caption" color="textMuted">
+                {hint}
+              </AppText>
+            </View>
+            <Toggle
+              value={roundCents}
+              onValueChange={onChangeRoundCents}
+              accessibilityLabel={t('settings.roundCents')}
+              accessibilityHint={hint}
+            />
+          </View>
+        </Card>
+        <CurrencySetting />
+        <LanguageSetting />
+        <Pressable
+          accessibilityRole="button"
+          onPress={onOpenAbout}
+          style={[styles.row, { backgroundColor: colors.surface }]}
+        >
+          <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.about')}</Text>
+          <Icon
+            name={{ ios: 'chevron.right', android: 'chevron_right' }}
+            color={colors.textMuted}
+            size={18}
           />
-        </View>
-      </Card>
-      <CurrencySetting />
-      <LanguageSetting />
-      <Pressable
-        accessibilityRole="button"
-        onPress={onOpenAbout}
-        style={[styles.row, { backgroundColor: colors.surface }]}
-      >
-        <Text style={[styles.rowLabel, { color: colors.text }]}>{t('settings.about')}</Text>
-        <Icon
-          name={{ ios: 'chevron.right', android: 'chevron_right' }}
-          color={colors.textMuted}
-          size={18}
-        />
-      </Pressable>
-      <Pressable accessibilityRole="button" onPress={onDeleteAllData} style={styles.deleteButton}>
-        <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
-          {t('settings.deleteAllData')}
-        </Text>
-      </Pressable>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={onDeleteAllData} style={styles.deleteButton}>
+          <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
+            {t('settings.deleteAllData')}
+          </Text>
+        </Pressable>
+      </ScrollView>
     </SafeAreaView>
   );
 }

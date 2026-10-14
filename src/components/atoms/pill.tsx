@@ -9,6 +9,8 @@ export type PillProps = {
   selected?: boolean;
   // "accent" = terracota (default); "accent2" = sálvia, used inside the cheapest card.
   tone?: 'accent' | 'accent2';
+  // "small" = compact option pills (Ajustes selectors); touch target stays at least 44 pt.
+  size?: 'regular' | 'small';
   onPress?: () => void;
   disabled?: boolean;
   // Override what screen readers announce (default: label). Pass translated strings.
@@ -21,6 +23,7 @@ export function Pill({
   label,
   selected = false,
   tone = 'accent',
+  size = 'regular',
   onPress,
   disabled = false,
   accessibilityLabel,
@@ -40,12 +43,21 @@ export function Pill({
       onPress={onPress}
       style={[
         styles.pill,
+        size === 'small' && styles.pillSmall,
         selected
           ? { backgroundColor: fill, borderColor: fill }
           : { backgroundColor: colors.background, borderColor: colors.border },
       ]}
     >
-      <Text style={[styles.label, { color: selected ? onFill : colors.text }]}>{label}</Text>
+      <Text
+        style={[
+          styles.label,
+          size === 'small' && styles.labelSmall,
+          { color: selected ? onFill : colors.text },
+        ]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
@@ -60,5 +72,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  pillSmall: {
+    minWidth: MIN_TOUCH_TARGET,
+    minHeight: MIN_TOUCH_TARGET,
+    paddingHorizontal: 14,
+  },
   label: { fontFamily: fontFamily.display, fontSize: 19 },
+  labelSmall: { fontSize: 15 },
 });

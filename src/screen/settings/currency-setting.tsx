@@ -25,6 +25,7 @@ export function CurrencySetting() {
           <Pill
             key={value}
             label={t(`settings.currency.${value}`)}
+            size="small"
             selected={currency === value}
             onPress={() => void currencyStore.setCurrency(value)}
             accessibilityLabel={`${label}: ${t(`settings.currency.${value}`)}`}

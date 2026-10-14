@@ -11,6 +11,7 @@ const meta = {
     label: { control: 'text' },
     selected: { control: 'boolean' },
     tone: { control: 'select', options: ['accent', 'accent2'] },
+    size: { control: 'select', options: ['regular', 'small'] },
     onPress: { action: 'pressed' },
   },
 } satisfies Meta<typeof Pill>;
@@ -22,6 +23,7 @@ export const Unselected: Story = {};
 export const Selected: Story = { args: { selected: true } };
 export const SelectedAccent2: Story = { args: { selected: true, tone: 'accent2' } };
 export const UnselectedAccent2: Story = { args: { tone: 'accent2' } };
+export const Small: Story = { args: { label: 'Real (R$)', selected: true, size: 'small' } };
 
 export const UnitChips: Story = {
   render: (args) => (
