@@ -5,7 +5,7 @@ import { Icon } from '@/components/atoms/icon';
 import { Button } from '@/components/atoms/button';
 import { FieldError } from '@/components/atoms/field-error';
 import { PillInput } from '@/components/atoms/pill-input';
-import { PriceRow } from '@/components/molecules/price-row';
+import { PriceRow, type PriceSuggestion } from '@/components/molecules/price-row';
 import { useI18n } from '@/i18n';
 import type { Unit } from '@/models/Unit';
 import { useTheme } from '@/theme/useTheme';
@@ -22,6 +22,8 @@ export type SceneRow = PriceRowDraft & {
   removable: boolean;
   // Translated inline errors to show (task 4.7).
   errors?: { price?: string; quantity?: string; unit?: string };
+  // Recent prices for this product + unit (S.2); empty when price history is off.
+  priceSuggestions?: PriceSuggestion[];
 };
 
 type NewComparePricesSceneProps = {
@@ -129,6 +131,7 @@ export function NewComparePricesScene({
             onBlurPrice={() => onBlurPrice?.(row.id)}
             onBlurQuantity={() => onBlurQuantity?.(row.id)}
             onRemove={row.removable ? () => onRemoveRow(row.id) : undefined}
+            priceSuggestions={row.priceSuggestions}
           />
         ))}
         {mixedUnits ? <MixedUnitsNotice /> : null}

@@ -59,6 +59,10 @@
     "resultBelowSecondDetail": "below the 2nd best — {{difference}} difference over {{quantity}}",
     "resultTie": "Tie — prices {{indexes}} cost the same per unit"
   },
+  "priceHistory": {
+    "recentPrices": "Recent prices",
+    "useSuggestion": "Use recent price {{price}}"
+  },
   "validation": {
     "productEmpty": "Enter the product name",
     "priceEmpty": "Enter the price",

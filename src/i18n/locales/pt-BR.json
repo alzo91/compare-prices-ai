@@ -59,6 +59,10 @@
     "resultBelowSecondDetail": "abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
     "resultTie": "Empate — os preços {{indexes}} custam o mesmo por unidade"
   },
+  "priceHistory": {
+    "recentPrices": "Preços recentes",
+    "useSuggestion": "Usar preço recente {{price}}"
+  },
   "validation": {
     "productEmpty": "Informe o nome do produto",
     "priceEmpty": "Informe o preço",
