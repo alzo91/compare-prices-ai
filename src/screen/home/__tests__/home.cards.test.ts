@@ -19,6 +19,17 @@ const comparison = (name: string, entries: PriceEntry[]): Comparison => ({
 });
 
 describe('buildComparisonCard', () => {
+  it('rounds the unit price to whole units when "Arredondar centavos" is on', () => {
+    const c = comparison('Arroz', [entry('a', 2490, 5, 'kg'), entry('b', 3050, 5, 'kg')]);
+    expect(buildComparisonCard(c, 'base', false)).toMatchObject({ unitPriceCents: 498 });
+    expect(buildComparisonCard(c, 'base', false)?.wholeUnits).toBeUndefined();
+    expect(buildComparisonCard(c, 'base', true)).toMatchObject({
+      unitPriceCents: 500,
+      wholeUnits: true,
+      best: { priceCents: 2490 },
+    });
+  });
+
   it('builds the Designer rice card (R$ 4,98/kg, 5 kg for R$ 24,90)', () => {
     const card = buildComparisonCard(
       comparison('Arroz branco tipo 1', [

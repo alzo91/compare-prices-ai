@@ -33,6 +33,17 @@ describe('buildResultCard', () => {
     expect(card?.savings).toMatchObject({ quantity: 5, unit: 'kg' });
   });
 
+  it('rounds the price to whole units when "Arredondar centavos" is on, display only', () => {
+    const rows = [row('a', '24,90', '5'), row('b', '30,50', '5')];
+    const off = buildResultCard(rows, 'pt-BR', 'base', false);
+    expect(off?.priceCents).toBe(498);
+    expect(off?.wholeUnits).toBeUndefined();
+    const on = buildResultCard(rows, 'pt-BR', 'base', true);
+    expect(on).toMatchObject({ priceCents: 500, wholeUnits: true });
+    // Typed prices are untouched.
+    expect(on?.winner?.priceCents).toBe(2490);
+  });
+
   it('ignores an invalid row once 2 others are valid', () => {
     const card = buildResultCard(
       [row('a', '24,90', '5'), row('b', 'abc', '2'), row('c', '12,20', '1')],

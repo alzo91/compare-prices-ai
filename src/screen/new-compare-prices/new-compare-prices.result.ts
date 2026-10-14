@@ -1,5 +1,9 @@
 import { compareEntries } from '@/business/service/compare.service';
-import { entryDisplayPrice, roundCentsForDisplay } from '@/business/service/display.service';
+import {
+  entryDisplayPrice,
+  roundCentsForDisplay,
+  roundToWholeUnits,
+} from '@/business/service/display.service';
 import { validateRow } from '@/business/service/input.service';
 import { computeSavings } from '@/business/service/savings.service';
 import type { PriceEntry } from '@/models/PriceEntry';
@@ -23,6 +27,8 @@ export type ResultCardModel = {
   priceCents: number;
   priceQuantity: number;
   priceUnit: Unit;
+  // Set when "Arredondar centavos" is on: priceCents is whole currency units, shown without cents.
+  wholeUnits?: boolean;
   // 1-based position of every cheapest row; more than one means a tie.
   cheapestRows: number[];
   // The single winner's row as typed; null on a tie.
@@ -37,6 +43,7 @@ export function buildResultCard(
   rows: readonly PriceRowDraft[],
   language: Language,
   basis: DisplayBasis = 'base',
+  roundCents = false,
 ): ResultCardModel | null {
   const entries: PriceEntry[] = [];
   const rowNumbers = new Map<string, number>();
@@ -61,7 +68,10 @@ export function buildResultCard(
     const best = entries.find((e) => e.id === comparison.cheapestIds[0]) as PriceEntry;
     const price = entryDisplayPrice(best, basis);
     return {
-      priceCents: roundCentsForDisplay(price.cents, true),
+      priceCents: roundCents
+        ? roundToWholeUnits(price.cents)
+        : roundCentsForDisplay(price.cents, true),
+      ...(roundCents && { wholeUnits: true }),
       priceQuantity: price.quantity,
       priceUnit: price.unit,
       cheapestRows: comparison.cheapestIds.map((id) => rowNumbers.get(id) as number),

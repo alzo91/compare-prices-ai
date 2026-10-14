@@ -5,6 +5,7 @@ import {
   entryDisplayPrice,
   priceForDisplay,
   roundCentsForDisplay,
+  roundToWholeUnits,
   unitPriceForBasis,
 } from '../display.service';
 import { pricePerBaseUnit } from '../price.service';
@@ -106,5 +107,15 @@ describe('entryDisplayPrice', () => {
       quantity: 500,
       unit: 'g',
     });
+  });
+});
+
+describe('roundToWholeUnits', () => {
+  it('rounds to whole currency units, half up', () => {
+    expect(roundToWholeUnits(498)).toBe(500);
+    expect(roundToWholeUnits(449)).toBe(400);
+    expect(roundToWholeUnits(450)).toBe(500);
+    expect(roundToWholeUnits(2490)).toBe(2500);
+    expect(roundToWholeUnits(49.9999999)).toBe(0);
   });
 });

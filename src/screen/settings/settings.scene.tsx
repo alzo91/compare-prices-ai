@@ -5,7 +5,9 @@ import { Card } from '@/components/atoms/card';
 import { Icon } from '@/components/atoms/icon';
 import { Pill } from '@/components/atoms/pill';
 import { Text as AppText } from '@/components/atoms/text';
+import { Toggle } from '@/components/atoms/toggle';
 import { useI18n } from '@/i18n';
+import { useFormat } from '@/i18n/format';
 import type { DisplayBasis } from '@/models/Settings';
 import { useTheme } from '@/theme/useTheme';
 
@@ -20,6 +22,8 @@ const BASIS_OPTIONS = [
 type SettingsSceneProps = {
   displayBasis: DisplayBasis;
   onChangeDisplayBasis: (basis: DisplayBasis) => void;
+  roundCents: boolean;
+  onChangeRoundCents: (value: boolean) => void;
   onOpenAbout: () => void;
   onDeleteAllData: () => void;
 };
@@ -27,11 +31,19 @@ type SettingsSceneProps = {
 export function SettingsScene({
   displayBasis,
   onChangeDisplayBasis,
+  roundCents,
+  onChangeRoundCents,
   onOpenAbout,
   onDeleteAllData,
 }: SettingsSceneProps) {
   const { colors } = useTheme();
   const { t } = useI18n();
+  const { formatCents } = useFormat();
+  // Example from the Designer: R$ 4,98 -> R$ 5.
+  const hint = t('settings.roundCentsHint', {
+    rounded: formatCents(500, { minimumFractionDigits: 0, maximumFractionDigits: 0 }),
+    exact: formatCents(498),
+  });
   return (
     <SafeAreaView
       edges={['top']}
@@ -53,6 +65,24 @@ export function SettingsScene({
               accessibilityLabel={`${t('settings.showPricePer')}: ${t(labelKey)}`}
             />
           ))}
+        </View>
+      </Card>
+      <Card style={styles.toggleCard}>
+        <View style={styles.toggleRow}>
+          <View style={styles.toggleText}>
+            <Text style={[styles.rowLabel, { color: colors.text }]}>
+              {t('settings.roundCents')}
+            </Text>
+            <AppText variant="caption" color="textMuted">
+              {hint}
+            </AppText>
+          </View>
+          <Toggle
+            value={roundCents}
+            onValueChange={onChangeRoundCents}
+            accessibilityLabel={t('settings.roundCents')}
+            accessibilityHint={hint}
+          />
         </View>
       </Card>
       <Pressable

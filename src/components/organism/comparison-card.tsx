@@ -11,6 +11,8 @@ import { useTheme } from '@/theme/useTheme';
 
 import { styles } from './comparison-card.layout';
 
+const NO_CENTS = { minimumFractionDigits: 0, maximumFractionDigits: 0 };
+
 // Numbers only; every sentence is built here from i18n so it follows the language.
 export type ComparisonCardSummary =
   // "preço 1 é o mais barato · economia de R$ 6,40"
@@ -26,6 +28,8 @@ export type ComparisonCardModel = {
   unitPriceCents: number;
   priceQuantity: number;
   priceUnit: Unit;
+  // Set when "Arredondar centavos" is on: unitPriceCents is whole currency units ("R$ 5").
+  wholeUnits?: boolean;
   // The best entry as typed: "5 kg · R$ 24,90".
   best: { quantity: number; unit: Unit; priceCents: number };
   pricesCount: number;
@@ -61,7 +65,10 @@ export function ComparisonCard({ comparison, onPress }: ComparisonCardProps) {
         ? t('home.packageSize', { size: sizes[0] })
         : t('home.packagesOf', { sizes: sizes.join(t('home.listAnd')) });
   }
-  const unitPrice = formatCents(comparison.unitPriceCents);
+  const unitPrice = formatCents(
+    comparison.unitPriceCents,
+    comparison.wholeUnits ? NO_CENTS : undefined,
+  );
   const unitSuffix =
     comparison.priceQuantity === 1
       ? `/${unitLabel(comparison.priceUnit)}`

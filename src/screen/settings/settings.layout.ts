@@ -23,6 +23,19 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 10,
   },
+  toggleCard: {
+    paddingVertical: 12,
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 16,
+  },
+  toggleText: {
+    flex: 1,
+    gap: 2,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

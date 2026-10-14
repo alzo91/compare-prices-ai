@@ -6,6 +6,7 @@ import { comparisonRepository } from '@/business/repository';
 import { useFormat } from '@/i18n/format';
 import { useI18n } from '@/i18n';
 import { useDisplayBasis } from '@/store/useDisplayBasis';
+import { useRoundCents } from '@/store/useRoundCents';
 
 import {
   fieldKey,
@@ -42,6 +43,7 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
   const { t } = useI18n();
   const { language } = useFormat();
   const basis = useDisplayBasis();
+  const roundCents = useRoundCents();
   const title = comparisonId ? t('newComparison.editTitle') : t('newComparison.title');
 
   const [productName, setProductName] = useState('');
@@ -90,7 +92,7 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
   const nameReason = productNameError(productName, touched);
 
   // Recomputed on every render, i.e. on every keystroke or unit change.
-  const result = buildResultCard(rowsState.rows, language, basis);
+  const result = buildResultCard(rowsState.rows, language, basis, roundCents);
 
   // Enables the Save button: null until the whole form is valid.
   const input = buildComparisonInput(productName, rowsState.rows, language);
