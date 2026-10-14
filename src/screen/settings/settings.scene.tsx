@@ -11,6 +11,7 @@ import { useFormat } from '@/i18n/format';
 import type { DisplayBasis } from '@/models/Settings';
 import { useTheme } from '@/theme/useTheme';
 
+import { PriceHistorySetting } from './price-history-setting';
 import { CurrencySetting } from './currency-setting';
 import { LanguageSetting } from './language-setting';
 import { styles } from './settings.layout';
@@ -24,6 +25,8 @@ const BASIS_OPTIONS = [
 type SettingsSceneProps = {
   displayBasis: DisplayBasis;
   onChangeDisplayBasis: (basis: DisplayBasis) => void;
+  keepPriceHistory: boolean;
+  onChangeKeepPriceHistory: (value: boolean) => void;
   roundCents: boolean;
   onChangeRoundCents: (value: boolean) => void;
   onOpenAbout: () => void;
@@ -33,6 +36,8 @@ type SettingsSceneProps = {
 export function SettingsScene({
   displayBasis,
   onChangeDisplayBasis,
+  keepPriceHistory,
+  onChangeKeepPriceHistory,
   roundCents,
   onChangeRoundCents,
   onOpenAbout,
@@ -70,6 +75,7 @@ export function SettingsScene({
         </View>
       </Card>
       <Card style={styles.toggleCard}>
+        <PriceHistorySetting value={keepPriceHistory} onValueChange={onChangeKeepPriceHistory} />
         <View style={styles.toggleRow}>
           <View style={styles.toggleText}>
             <Text style={[styles.rowLabel, { color: colors.text }]}>

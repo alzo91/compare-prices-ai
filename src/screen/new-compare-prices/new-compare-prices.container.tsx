@@ -2,11 +2,17 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
-import { comparisonRepository } from '@/business/repository';
+import {
+  comparisonRepository,
+  priceHistoryRepository,
+  recordPriceHistory,
+} from '@/business/repository';
 
 import { useFormat } from '@/i18n/format';
 import { useI18n } from '@/i18n';
+import type { PriceHistoryEntry } from '@/models/PriceHistory';
 import { useDisplayBasis } from '@/store/useDisplayBasis';
+import { useKeepPriceHistory } from '@/store/useKeepPriceHistory';
 import { useRoundCents } from '@/store/useRoundCents';
 
 import {
@@ -28,6 +34,7 @@ import {
   updateRow,
 } from './new-compare-prices.form';
 import { ComparisonLoadStatus } from './comparison-load-status';
+import { rowPriceSuggestions } from './new-compare-prices.history';
 import { confirmDeleteComparison } from './new-compare-prices.delete';
 import { buildResultCard } from './new-compare-prices.result';
 import { numberErrorKey, productNameErrorKey, unitErrorKey } from './new-compare-prices.messages';
@@ -41,9 +48,10 @@ type NewComparePricesContainerProps = {
 // Container: form state and saving through the repository.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
-  const { language, currencySymbol } = useFormat();
+  const { language, currency, currencySymbol } = useFormat();
   const basis = useDisplayBasis();
   const roundCents = useRoundCents();
+  const keepPriceHistory = useKeepPriceHistory();
   const title = comparisonId ? t('newComparison.editTitle') : t('newComparison.title');
 
   const [productName, setProductName] = useState('');
@@ -76,6 +84,21 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
     // Once per id: a later language change must not overwrite the user's edits.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comparisonId]);
+  // Price history (S.2): recent prices for the typed product, offered as chips per row.
+  const [history, setHistory] = useState<PriceHistoryEntry[]>([]);
+  useEffect(() => {
+    if (!keepPriceHistory) return;
+    let active = true;
+    priceHistoryRepository
+      .listForProduct(productName)
+      .catch((): PriceHistoryEntry[] => [])
+      .then((entries) => {
+        if (active) setHistory(entries);
+      });
+    return () => {
+      active = false;
+    };
+  }, [productName, keepPriceHistory]);
   const [touched, setTouched] = useState<Touched>({});
   const rows = rowsState.rows.map((row) => {
     const e = visibleRowErrors(row.id, row, touched, language);
@@ -87,6 +110,13 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
         quantity: e.quantity && t(numberErrorKey('quantity', e.quantity)),
         unit: e.unit && t(unitErrorKey(e.unit)),
       },
+      priceSuggestions: rowPriceSuggestions(
+        history,
+        row.unit,
+        language,
+        keepPriceHistory,
+        currency,
+      ),
     };
   });
   const nameReason = productNameError(productName, touched);
@@ -107,6 +137,13 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
     try {
       if (comparisonId) await comparisonRepository.update(comparisonId, input);
       else await comparisonRepository.create(input);
+      // Only after a successful save; a history failure must not block leaving the screen.
+      await recordPriceHistory(
+        priceHistoryRepository,
+        keepPriceHistory,
+        input.product.name,
+        input.entries,
+      ).catch(() => false);
       router.back(); // back to Home
     } catch {
       setSaveFailed(true);
