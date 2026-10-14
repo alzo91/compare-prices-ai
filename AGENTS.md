@@ -65,3 +65,18 @@ The designer was exported to [html](./Designer/html/Comparador%20de%20Preços.dc
 - Expo changes every SDK — check versioned docs (`https://docs.expo.dev/versions/v57.0.0/`) before using an Expo API.
 - Install packages with `npx expo install <pkg>`. Run `npm run typecheck` before declaring a task done.
 - Never create or edit `ios/` / `android/` by hand — configure native behavior in `app.json`.
+
+### Board workflow (Notion)
+
+Every task card follows this lifecycle. The `board` skill has the commands (Notion update + `next_tasks.py --set` + `gen_md.py`).
+
+1. **Start developing a task** → move its card to `In Progress` first, before writing code. If this is the first task of its epic to leave Backlog, set the epic to `Active`.
+2. **Finish developing** → typecheck, lint and tests pass, commit on a `feat/<task-id>-<slug>` branch, push, and open the PR (one PR per task, task id in the title; one PR may cover several tasks only when they ship together).
+3. **PR opened** → move the card to `In Review`. Only after the PR is opened, never before.
+4. **PR merged** → move the card to `Done` (check the acceptance criteria in `notion-board/tasks-<epic>.md` first). When every task of an epic is `Done`, set the epic to `Done`.
+
+Rules:
+
+- Update Notion and the local mirror (`status.json`, `notion-board/*.md`) together.
+- Subagents that develop a task do not touch the board or push; the main session moves the cards and opens the PR.
+- Opening a PR or pushing still needs the user's go-ahead unless they have already asked for it in this session.
