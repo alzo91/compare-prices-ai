@@ -84,6 +84,9 @@ describe('parsePriceCents', () => {
     ['24,90', 'pt-BR', 2490],
     ['R$ 24,90', 'pt-BR', 2490],
     ['$1,234.56', 'en-US', 123456],
+    ['US$ 24,90', 'pt-BR', 2490],
+    ['€24.90', 'en-US', 2490],
+    ['24,90 EUR', 'pt-BR', 2490],
     ['4.59', 'pt-BR', 459],
     ['0,10', 'pt-BR', 10],
   ] as const)('parses %j in %s as %d cents', (input, language, cents) => {

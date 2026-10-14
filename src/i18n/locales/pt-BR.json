@@ -81,9 +81,12 @@
     "keepPriceHistoryHint": "Guarda os preços já digitados",
     "roundCents": "Arredondar centavos",
     "roundCentsHint": "Mostra {{rounded}} em vez de {{exact}}",
-    "currency": "Moeda",
-    "currencyBRL": "Real (R$)",
-    "currencyUSD": "Dólar (US$)",
+    "currency": {
+      "label": "Moeda",
+      "BRL": "Real (R$)",
+      "USD": "Dólar (US$)",
+      "EUR": "Euro (€)"
+    },
     "language": "Idioma",
     "about": "Sobre o app",
     "deleteAllData": "Apagar todos os dados",
