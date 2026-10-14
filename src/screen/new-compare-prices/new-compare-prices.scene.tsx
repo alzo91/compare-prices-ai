@@ -12,6 +12,7 @@ import { useTheme } from '@/theme/useTheme';
 
 import type { PriceRowDraft } from './new-compare-prices.form';
 import { MixedUnitsNotice } from './mixed-units-notice';
+import { rowHighlight } from './new-compare-prices.highlight';
 import { styles } from './new-compare-prices.layout';
 import type { ResultCardModel } from './new-compare-prices.result';
 import { ResultCard } from './result-card';
@@ -116,6 +117,7 @@ export function NewComparePricesScene({
           <PriceRow
             key={row.id}
             index={i + 1}
+            {...rowHighlight(result, i + 1)}
             price={row.price}
             quantity={row.quantity}
             unit={row.unit}
