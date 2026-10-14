@@ -57,7 +57,14 @@
     "resultWinner": "Price {{index}} is the cheapest — {{quantity}} for {{price}}",
     "resultBelowSecond": "{{percent}} below the 2nd best — {{difference}} difference over {{quantity}}",
     "resultBelowSecondDetail": "below the 2nd best — {{difference}} difference over {{quantity}}",
-    "resultTie": "Tie — prices {{indexes}} cost the same per unit"
+    "resultTie": "Tie — prices {{indexes}} cost the same per unit",
+    "delete": {
+      "action": "Delete comparison",
+      "title": "Delete this comparison?",
+      "message": "“{{name}}” will be removed from your list. This cannot be undone.",
+      "confirm": "Delete",
+      "error": "Could not delete. Please try again."
+    }
   },
   "validation": {
     "productEmpty": "Enter the product name",
@@ -87,7 +94,13 @@
       "USD": "US dollar ($)",
       "EUR": "Euro (€)"
     },
-    "language": "Language",
+    "language": {
+      "title": "Language",
+      "device": "Follow device",
+      "ptBR": "Português (Brasil)",
+      "enUS": "English (US)",
+      "option": "Language: {{option}}"
+    },
     "about": "About the app",
     "deleteAllData": "Delete all data",
     "deleteAllDataTitle": "Delete all data?",

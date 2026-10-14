@@ -57,7 +57,14 @@
     "resultWinner": "O preço {{index}} é o mais barato — {{quantity}} por {{price}}",
     "resultBelowSecond": "{{percent}} abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
     "resultBelowSecondDetail": "abaixo do 2º melhor — {{difference}} de diferença em {{quantity}}",
-    "resultTie": "Empate — os preços {{indexes}} custam o mesmo por unidade"
+    "resultTie": "Empate — os preços {{indexes}} custam o mesmo por unidade",
+    "delete": {
+      "action": "Apagar comparação",
+      "title": "Apagar esta comparação?",
+      "message": "“{{name}}” será removida da sua lista. Não é possível desfazer.",
+      "confirm": "Apagar",
+      "error": "Não foi possível apagar. Tente novamente."
+    }
   },
   "validation": {
     "productEmpty": "Informe o nome do produto",
@@ -87,7 +94,13 @@
       "USD": "Dólar (US$)",
       "EUR": "Euro (€)"
     },
-    "language": "Idioma",
+    "language": {
+      "title": "Idioma",
+      "device": "Seguir o dispositivo",
+      "ptBR": "Português (Brasil)",
+      "enUS": "English (US)",
+      "option": "Idioma: {{option}}"
+    },
     "about": "Sobre o app",
     "deleteAllData": "Apagar todos os dados",
     "deleteAllDataTitle": "Apagar todos os dados?",

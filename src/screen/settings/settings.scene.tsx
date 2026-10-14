@@ -12,6 +12,7 @@ import type { DisplayBasis } from '@/models/Settings';
 import { useTheme } from '@/theme/useTheme';
 
 import { CurrencySetting } from './currency-setting';
+import { LanguageSetting } from './language-setting';
 import { styles } from './settings.layout';
 
 const BASIS_OPTIONS = [
@@ -87,6 +88,7 @@ export function SettingsScene({
         </View>
       </Card>
       <CurrencySetting />
+      <LanguageSetting />
       <Pressable
         accessibilityRole="button"
         onPress={onOpenAbout}

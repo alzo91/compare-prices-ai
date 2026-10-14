@@ -45,4 +45,13 @@ export const styles = StyleSheet.create({
     textTransform: 'uppercase',
     paddingHorizontal: 8,
   },
+  // Text-only destructive action, same style as Settings "Apagar todos os dados".
+  deleteButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  deleteLabel: {
+    fontSize: 17,
+  },
 });
