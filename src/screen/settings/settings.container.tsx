@@ -5,6 +5,7 @@ import { clearAllData } from '@/business/repository';
 import { useI18n } from '@/i18n';
 import { currencyStore } from '@/store/useCurrency';
 import { displayBasisStore, useDisplayBasis } from '@/store/useDisplayBasis';
+import { keepPriceHistoryStore, useKeepPriceHistory } from '@/store/useKeepPriceHistory';
 import { languageStore } from '@/store/useLanguagePreference';
 import { roundCentsStore, useRoundCents } from '@/store/useRoundCents';
 
@@ -15,6 +16,7 @@ export function SettingsContainer() {
   const { t } = useI18n();
   const displayBasis = useDisplayBasis();
   const roundCents = useRoundCents();
+  const keepPriceHistory = useKeepPriceHistory();
 
   const confirmDeleteAllData = () => {
     Alert.alert(t('settings.deleteAllDataTitle'), t('settings.deleteAllDataMessage'), [
@@ -28,6 +30,7 @@ export function SettingsContainer() {
             Promise.all([
               displayBasisStore.load(),
               roundCentsStore.load(),
+              keepPriceHistoryStore.load(),
               languageStore.load(),
               currencyStore.load(),
             ]),
@@ -41,6 +44,8 @@ export function SettingsContainer() {
     <SettingsScene
       displayBasis={displayBasis}
       onChangeDisplayBasis={(basis) => void displayBasisStore.setBasis(basis)}
+      keepPriceHistory={keepPriceHistory}
+      onChangeKeepPriceHistory={(value) => void keepPriceHistoryStore.setEnabled(value)}
       roundCents={roundCents}
       onChangeRoundCents={(value) => void roundCentsStore.setEnabled(value)}
       onOpenAbout={() => router.push('/about')}

@@ -30,6 +30,18 @@ describe('currencySymbol', () => {
   ] as const)('%s in %s is %j', (currency, language, symbol) => {
     expect(currencySymbol(currency, language)).toBe(symbol);
   });
+
+  // Hermes (iOS) has no NumberFormat.formatToParts; the symbol must not depend on it.
+  it('works without formatToParts', () => {
+    const original = Intl.NumberFormat.prototype.formatToParts;
+    // @ts-expect-error simulate the Hermes runtime
+    delete Intl.NumberFormat.prototype.formatToParts;
+    try {
+      expect(currencySymbol('EUR', 'pt-BR')).toBe('€');
+    } finally {
+      Intl.NumberFormat.prototype.formatToParts = original;
+    }
+  });
 });
 
 describe('toCurrency', () => {
