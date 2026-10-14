@@ -41,6 +41,17 @@ export const Highlighted: Story = {
   args: { price: '24,90', quantity: '5', unit: 'kg', highlight: true },
 };
 
+// Price history on (S.2): recent prices for this product + unit, shown while the price is empty.
+export const WithSuggestions: Story = {
+  args: {
+    unit: 'kg',
+    priceSuggestions: [
+      { label: 'R$ 24,90', value: '24,90' },
+      { label: 'R$ 22,50', value: '22,50' },
+    ],
+  },
+};
+
 // Row 3+: shows the remove control.
 export const Removable: Story = {
   args: { index: 3, price: '24,90', quantity: '5', unit: 'kg', onRemove: () => {} },

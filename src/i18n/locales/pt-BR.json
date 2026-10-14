@@ -66,6 +66,10 @@
       "error": "Não foi possível apagar. Tente novamente."
     }
   },
+  "priceHistory": {
+    "recentPrices": "Preços recentes",
+    "useSuggestion": "Usar preço recente {{price}}"
+  },
   "validation": {
     "productEmpty": "Informe o nome do produto",
     "priceEmpty": "Informe o preço",
