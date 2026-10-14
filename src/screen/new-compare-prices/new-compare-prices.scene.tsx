@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -15,7 +16,7 @@ import { MixedUnitsNotice } from './mixed-units-notice';
 import { rowHighlight } from './new-compare-prices.highlight';
 import { styles } from './new-compare-prices.layout';
 import type { ResultCardModel } from './new-compare-prices.result';
-import { ResultCard } from './result-card';
+import { ResultSheet } from './result-sheet';
 
 // A form row plus whether it shows the remove control (rows 3+).
 export type SceneRow = PriceRowDraft & {
@@ -84,76 +85,86 @@ export function NewComparePricesScene({
 }: NewComparePricesSceneProps) {
   const { colors } = useTheme();
   const { t } = useI18n();
+  // The result sheet covers the bottom of the form; pad it so the last row scrolls clear (9.5).
+  const [sheetHeight, setSheetHeight] = useState(0);
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t('common.close')}
-          onPress={onClose}
-          style={[styles.close, { backgroundColor: colors.surface }]}
-        >
-          <Icon name={{ ios: 'xmark', android: 'close' }} color={colors.text} />
-        </Pressable>
-        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
-      </View>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-      >
-        <Text style={[styles.subtitle, { color: colors.text }]}>{t('newComparison.subtitle')}</Text>
-        <View style={styles.section}>
-          <Text style={[styles.label, { color: colors.textMuted }]}>
-            {t('newComparison.productLabel')}
-          </Text>
-          <PillInput
-            value={productName}
-            onChangeText={onChangeProductName}
-            onBlur={onBlurProductName}
-            error={productNameError}
-            placeholder={t('newComparison.productPlaceholder')}
-            accessibilityLabel={t('newComparison.productLabel')}
-            autoCapitalize="sentences"
-            returnKeyType="next"
-          />
-        </View>
-        <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>
-          {t('newComparison.pricesLabel')}
-        </Text>
-        {rows.map((row, i) => (
-          <PriceRow
-            key={row.id}
-            index={i + 1}
-            {...rowHighlight(result, i + 1)}
-            price={row.price}
-            quantity={row.quantity}
-            unit={row.unit}
-            currencySymbol={currencySymbol}
-            onChangePrice={(text) => onChangePrice(row.id, text)}
-            onChangeQuantity={(text) => onChangeQuantity(row.id, text)}
-            onChangeUnit={(unit) => onChangeUnit(row.id, unit)}
-            errors={row.errors}
-            onBlurPrice={() => onBlurPrice?.(row.id)}
-            onBlurQuantity={() => onBlurQuantity?.(row.id)}
-            onRemove={row.removable ? () => onRemoveRow(row.id) : undefined}
-            priceSuggestions={row.priceSuggestions}
-          />
-        ))}
-        {mixedUnits ? <MixedUnitsNotice /> : null}
-        <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
-        {result ? <ResultCard result={result} /> : null}
-        {saveError ? <FieldError message={saveError} /> : null}
-        <Button label={t('newComparison.saveComparison')} onPress={onSave} disabled={!isValid} />
-        {deleteError ? <FieldError message={deleteError} /> : null}
-        {onDelete ? (
-          <Pressable accessibilityRole="button" onPress={onDelete} style={styles.deleteButton}>
-            <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
-              {t('newComparison.delete.action')}
-            </Text>
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('common.close')}
+            onPress={onClose}
+            style={[styles.close, { backgroundColor: colors.surface }]}
+          >
+            <Icon name={{ ios: 'xmark', android: 'close' }} color={colors.text} />
           </Pressable>
-        ) : null}
-      </ScrollView>
-    </SafeAreaView>
+          <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+        </View>
+        <ScrollView
+          contentContainerStyle={[styles.content, { paddingBottom: sheetHeight + 24 }]}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+        >
+          <Text style={[styles.subtitle, { color: colors.text }]}>
+            {t('newComparison.subtitle')}
+          </Text>
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textMuted }]}>
+              {t('newComparison.productLabel')}
+            </Text>
+            <PillInput
+              value={productName}
+              onChangeText={onChangeProductName}
+              onBlur={onBlurProductName}
+              error={productNameError}
+              placeholder={t('newComparison.productPlaceholder')}
+              accessibilityLabel={t('newComparison.productLabel')}
+              autoCapitalize="sentences"
+              returnKeyType="next"
+            />
+          </View>
+          <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>
+            {t('newComparison.pricesLabel')}
+          </Text>
+          {rows.map((row, i) => (
+            <PriceRow
+              key={row.id}
+              index={i + 1}
+              {...rowHighlight(result, i + 1)}
+              price={row.price}
+              quantity={row.quantity}
+              unit={row.unit}
+              currencySymbol={currencySymbol}
+              onChangePrice={(text) => onChangePrice(row.id, text)}
+              onChangeQuantity={(text) => onChangeQuantity(row.id, text)}
+              onChangeUnit={(unit) => onChangeUnit(row.id, unit)}
+              errors={row.errors}
+              onBlurPrice={() => onBlurPrice?.(row.id)}
+              onBlurQuantity={() => onBlurQuantity?.(row.id)}
+              onRemove={row.removable ? () => onRemoveRow(row.id) : undefined}
+              priceSuggestions={row.priceSuggestions}
+            />
+          ))}
+          {mixedUnits ? <MixedUnitsNotice /> : null}
+          <Button label={t('newComparison.addPrice')} onPress={onAddRow} />
+          {deleteError ? <FieldError message={deleteError} /> : null}
+          {onDelete ? (
+            <Pressable accessibilityRole="button" onPress={onDelete} style={styles.deleteButton}>
+              <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
+                {t('newComparison.delete.action')}
+              </Text>
+            </Pressable>
+          ) : null}
+        </ScrollView>
+      </SafeAreaView>
+      <ResultSheet
+        result={result}
+        isValid={isValid}
+        saveError={saveError}
+        onSave={onSave}
+        onCollapsedHeight={setSheetHeight}
+      />
+    </View>
   );
 }
