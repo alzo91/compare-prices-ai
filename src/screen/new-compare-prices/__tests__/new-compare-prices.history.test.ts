@@ -35,6 +35,12 @@ describe('rowPriceSuggestions', () => {
     ]);
   });
 
+  it('labels chips in the selected currency', async () => {
+    const chips = rowPriceSuggestions(await history(), 'L', 'en-US', true, 'EUR');
+    expect(chips.map((c) => normalize(c.label))).toEqual(['€50.00', '€4.59']);
+    expect(chips.map((c) => c.value)).toEqual(['50.00', '4.59']);
+  });
+
   it('offers nothing for another unit, no unit, or with history off', async () => {
     const entries = await history();
     expect(rowPriceSuggestions(entries, 'kg', 'pt-BR', true)).toEqual([]);

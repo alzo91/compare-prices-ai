@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import {
   comparisonRepository,
@@ -34,6 +35,7 @@ import {
 } from './new-compare-prices.form';
 import { ComparisonLoadStatus } from './comparison-load-status';
 import { rowPriceSuggestions } from './new-compare-prices.history';
+import { confirmDeleteComparison } from './new-compare-prices.delete';
 import { buildResultCard } from './new-compare-prices.result';
 import { numberErrorKey, productNameErrorKey, unitErrorKey } from './new-compare-prices.messages';
 import { NewComparePricesScene } from './new-compare-prices.scene';
@@ -43,12 +45,10 @@ type NewComparePricesContainerProps = {
   comparisonId?: string;
 };
 
-const CURRENCY_SYMBOL = { 'pt-BR': 'R$', 'en-US': '$' } as const;
-
 // Container: form state and saving through the repository.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
-  const { language } = useFormat();
+  const { language, currency, currencySymbol } = useFormat();
   const basis = useDisplayBasis();
   const roundCents = useRoundCents();
   const keepPriceHistory = useKeepPriceHistory();
@@ -110,7 +110,13 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
         quantity: e.quantity && t(numberErrorKey('quantity', e.quantity)),
         unit: e.unit && t(unitErrorKey(e.unit)),
       },
-      priceSuggestions: rowPriceSuggestions(history, row.unit, language, keepPriceHistory),
+      priceSuggestions: rowPriceSuggestions(
+        history,
+        row.unit,
+        language,
+        keepPriceHistory,
+        currency,
+      ),
     };
   });
   const nameReason = productNameError(productName, touched);
@@ -145,6 +151,29 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
     }
   };
 
+  // Delete (task 6.2): confirm, remove from storage, back to Home (it reloads on focus).
+  const [deleting, setDeleting] = useState(false);
+  const [deleteFailed, setDeleteFailed] = useState(false);
+  const onDelete = () => {
+    if (!comparisonId || deleting) return;
+    confirmDeleteComparison(
+      Alert.alert,
+      (key, options) => t(key as never, options),
+      productName,
+      async () => {
+        setDeleting(true);
+        setDeleteFailed(false);
+        try {
+          await comparisonRepository.remove(comparisonId);
+          router.back();
+        } catch {
+          setDeleteFailed(true);
+          setDeleting(false);
+        }
+      },
+    );
+  };
+
   if (loadState !== 'ready') {
     return <ComparisonLoadStatus title={title} state={loadState} onClose={() => router.back()} />;
   }
@@ -154,11 +183,13 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       title={title}
       productName={productName}
       rows={rows}
-      currencySymbol={CURRENCY_SYMBOL[language]}
+      currencySymbol={currencySymbol}
       result={result}
-      isValid={isValid && !saving}
+      isValid={isValid && !saving && !deleting}
       saveError={saveFailed ? t('newComparison.saveError') : undefined}
       onSave={onSave}
+      onDelete={comparisonId ? onDelete : undefined}
+      deleteError={deleteFailed ? t('newComparison.delete.error') : undefined}
       productNameError={nameReason && t(productNameErrorKey(nameReason))}
       mixedUnits={hasMixedMeasurementTypes(rows)}
       onBlurProductName={() => setTouched((s) => touch(s, NAME_KEY))}

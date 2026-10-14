@@ -1,27 +1,13 @@
 import { useTranslation } from 'react-i18next';
 
-import type { Currency, Language } from '@/models/Settings';
+import { type Currency, DEFAULT_SETTINGS, type Language } from '@/models/Settings';
+import { useCurrency } from '@/store/useCurrency';
 
+import { currencySymbol, formatMoney, numberFormatter } from './currency';
 import { getLanguage } from './index';
 
-// Each language formats money in its own currency: R$ 1.234,56 (pt-BR) · $1,234.56 (en-US).
-export const CURRENCY_BY_LANGUAGE: Record<Language, Currency | 'USD'> = {
-  'pt-BR': 'BRL',
-  'en-US': 'USD',
-};
-
-// Intl.NumberFormat is costly to build; reuse one per locale + options.
-const cache = new Map<string, Intl.NumberFormat>();
-
-function formatter(language: Language, options: Intl.NumberFormatOptions): Intl.NumberFormat {
-  const key = `${language}|${JSON.stringify(options)}`;
-  let instance = cache.get(key);
-  if (!instance) {
-    instance = new Intl.NumberFormat(language, options);
-    cache.set(key, instance);
-  }
-  return instance;
-}
+// The language picks the number format (separators, symbol position); the "Moeda" setting (7.3)
+// picks the currency: R$ 1.234,56 (pt-BR, BRL) · R$1,234.56 (en-US, BRL) · US$ 1.234,56 (pt-BR, USD).
 
 // 1234.5 → "1.234,5" (pt-BR) · "1,234.5" (en-US).
 export function formatNumber(
@@ -29,20 +15,17 @@ export function formatNumber(
   options: Intl.NumberFormatOptions = {},
   language: Language = getLanguage(),
 ): string {
-  return formatter(language, { maximumFractionDigits: 3, ...options }).format(value);
+  return numberFormatter(language, { maximumFractionDigits: 3, ...options }).format(value);
 }
 
-// 24.9 → "R$ 24,90" (pt-BR) · "$24.90" (en-US).
+// 24.9 → "R$ 24,90" (pt-BR, BRL) · "$24.90" (en-US, USD).
 export function formatCurrency(
   value: number,
   options: Intl.NumberFormatOptions = {},
   language: Language = getLanguage(),
+  currency: Currency = DEFAULT_SETTINGS.currency,
 ): string {
-  return formatter(language, {
-    style: 'currency',
-    currency: CURRENCY_BY_LANGUAGE[language],
-    ...options,
-  }).format(value);
+  return formatMoney(value, currency, language, options);
 }
 
 // Prices are stored in cents (PriceEntry.priceCents): 2490 → "R$ 24,90".
@@ -50,21 +33,25 @@ export function formatCents(
   cents: number,
   options: Intl.NumberFormatOptions = {},
   language: Language = getLanguage(),
+  currency: Currency = DEFAULT_SETTINGS.currency,
 ): string {
-  return formatCurrency(cents / 100, options, language);
+  return formatCurrency(cents / 100, options, language, currency);
 }
 
-// Hook variant: re-renders the component when the language changes.
+// Hook variant: re-renders the component when the language or the currency changes.
 export function useFormat() {
   useTranslation(); // subscribes to languageChanged
+  const currency = useCurrency();
   const language = getLanguage();
   return {
     language,
+    currency,
+    currencySymbol: currencySymbol(currency, language),
     formatNumber: (value: number, options?: Intl.NumberFormatOptions) =>
       formatNumber(value, options, language),
     formatCurrency: (value: number, options?: Intl.NumberFormatOptions) =>
-      formatCurrency(value, options, language),
+      formatCurrency(value, options, language, currency),
     formatCents: (cents: number, options?: Intl.NumberFormatOptions) =>
-      formatCents(cents, options, language),
+      formatCents(cents, options, language, currency),
   };
 }

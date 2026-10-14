@@ -38,6 +38,10 @@ type NewComparePricesSceneProps = {
   // Translated message when saving failed.
   saveError?: string;
   onSave: () => void;
+  // Edit mode only: shows the delete action (task 6.2).
+  onDelete?: () => void;
+  // Translated message when deleting failed.
+  deleteError?: string;
   // Translated product name error (task 4.7).
   productNameError?: string;
   // Rows mix measurement types: show a message instead of a result (task 4.7).
@@ -63,6 +67,8 @@ export function NewComparePricesScene({
   isValid,
   saveError,
   onSave,
+  onDelete,
+  deleteError,
   productNameError,
   mixedUnits = false,
   onBlurProductName,
@@ -139,6 +145,14 @@ export function NewComparePricesScene({
         {result ? <ResultCard result={result} /> : null}
         {saveError ? <FieldError message={saveError} /> : null}
         <Button label={t('newComparison.saveComparison')} onPress={onSave} disabled={!isValid} />
+        {deleteError ? <FieldError message={deleteError} /> : null}
+        {onDelete ? (
+          <Pressable accessibilityRole="button" onPress={onDelete} style={styles.deleteButton}>
+            <Text style={[styles.deleteLabel, { color: colors.accentText }]}>
+              {t('newComparison.delete.action')}
+            </Text>
+          </Pressable>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );

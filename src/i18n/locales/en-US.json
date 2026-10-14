@@ -57,7 +57,14 @@
     "resultWinner": "Price {{index}} is the cheapest — {{quantity}} for {{price}}",
     "resultBelowSecond": "{{percent}} below the 2nd best — {{difference}} difference over {{quantity}}",
     "resultBelowSecondDetail": "below the 2nd best — {{difference}} difference over {{quantity}}",
-    "resultTie": "Tie — prices {{indexes}} cost the same per unit"
+    "resultTie": "Tie — prices {{indexes}} cost the same per unit",
+    "delete": {
+      "action": "Delete comparison",
+      "title": "Delete this comparison?",
+      "message": "“{{name}}” will be removed from your list. This cannot be undone.",
+      "confirm": "Delete",
+      "error": "Could not delete. Please try again."
+    }
   },
   "priceHistory": {
     "recentPrices": "Recent prices",
@@ -85,10 +92,19 @@
     "keepPriceHistoryHint": "Stores prices you've already entered",
     "roundCents": "Round cents",
     "roundCentsHint": "Shows {{rounded}} instead of {{exact}}",
-    "currency": "Currency",
-    "currencyBRL": "Brazilian real (R$)",
-    "currencyUSD": "US dollar ($)",
-    "language": "Language",
+    "currency": {
+      "label": "Currency",
+      "BRL": "Brazilian real (R$)",
+      "USD": "US dollar ($)",
+      "EUR": "Euro (€)"
+    },
+    "language": {
+      "title": "Language",
+      "device": "Follow device",
+      "ptBR": "Português (Brasil)",
+      "enUS": "English (US)",
+      "option": "Language: {{option}}"
+    },
     "about": "About the app",
     "deleteAllData": "Delete all data",
     "deleteAllDataTitle": "Delete all data?",
