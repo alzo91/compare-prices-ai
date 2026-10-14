@@ -8,6 +8,11 @@ export function collapsedSnapPoint(summaryHeight: number, footerHeight: number):
   return Math.ceil(SHEET_HANDLE_HEIGHT + summaryHeight + footerHeight);
 }
 
+// The form just went from incomplete to complete: the moment the sheet opens fully on its own.
+export function becameComplete(wasValid: boolean, isValid: boolean): boolean {
+  return !wasValid && isValid;
+}
+
 export const styles = StyleSheet.create({
   sheet: {
     shadowColor: '#000',

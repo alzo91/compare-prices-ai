@@ -16,7 +16,7 @@ import { useTheme } from '@/theme/useTheme';
 
 import type { ResultCardModel } from './new-compare-prices.result';
 import { ResultCard } from './result-card';
-import { collapsedSnapPoint, styles } from './result-sheet.layout';
+import { becameComplete, collapsedSnapPoint, styles } from './result-sheet.layout';
 import { useResultText } from './result-text';
 
 type ResultSheetProps = {
@@ -31,7 +31,8 @@ type ResultSheetProps = {
 
 // Result + "Salvar comparação" in a sheet pinned to the bottom of the form (9.5). Inline, not
 // modal: the form behind it stays usable. Collapsed = one summary line + Save; dragging up or
-// tapping the summary shows the full result card. Hidden while the keyboard is up.
+// tapping the summary shows the full result card. Hidden while the keyboard is up. Opens fully
+// on its own when the form becomes complete; the user can collapse it to keep adding prices.
 export function ResultSheet({
   result,
   isValid,
@@ -49,6 +50,10 @@ export function ResultSheet({
   const [footerHeight, setFooterHeight] = useState(80 + Math.max(insets.bottom, 16));
   const collapsed = collapsedSnapPoint(summaryHeight, footerHeight);
   const snapPoints = useMemo(() => [collapsed], [collapsed]);
+  const keyboardUp = useRef(false);
+  // Set when the form became complete while the keyboard was up: expand once it hides.
+  const expandPending = useRef(false);
+  const wasValid = useRef(isValid);
 
   useEffect(() => {
     onCollapsedHeight?.(collapsed);
@@ -57,12 +62,19 @@ export function ResultSheet({
   // The keyboard would push the sheet over the field being typed in, so step aside until it closes.
   useEffect(() => {
     const ios = Platform.OS === 'ios';
-    const show = Keyboard.addListener(ios ? 'keyboardWillShow' : 'keyboardDidShow', () =>
-      sheet.current?.close(),
-    );
-    const hide = Keyboard.addListener(ios ? 'keyboardWillHide' : 'keyboardDidHide', () =>
-      sheet.current?.snapToIndex(0),
-    );
+    const show = Keyboard.addListener(ios ? 'keyboardWillShow' : 'keyboardDidShow', () => {
+      keyboardUp.current = true;
+      sheet.current?.close();
+    });
+    const hide = Keyboard.addListener(ios ? 'keyboardWillHide' : 'keyboardDidHide', () => {
+      keyboardUp.current = false;
+      if (expandPending.current) {
+        expandPending.current = false;
+        sheet.current?.expand();
+      } else {
+        sheet.current?.snapToIndex(0);
+      }
+    });
     return () => {
       show.remove();
       hide.remove();
@@ -73,6 +85,23 @@ export function ResultSheet({
   useEffect(() => {
     if (!result) sheet.current?.collapse();
   }, [result]);
+
+  // Every field filled: show the full result. Only on the change to complete, so a saved
+  // comparison opened for editing (already complete at mount) starts collapsed.
+  useEffect(() => {
+    const complete = becameComplete(wasValid.current, isValid) && result !== null;
+    wasValid.current = isValid;
+    if (!complete) {
+      if (!isValid) expandPending.current = false;
+      return;
+    }
+    if (keyboardUp.current) {
+      expandPending.current = true;
+    } else {
+      // Next frame: the result card has been laid out, so the expanded height is current.
+      requestAnimationFrame(() => sheet.current?.expand());
+    }
+  }, [isValid, result]);
 
   const renderFooter = useCallback(
     (props: BottomSheetFooterProps) => (
