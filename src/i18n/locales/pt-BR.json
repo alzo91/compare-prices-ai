@@ -91,7 +91,13 @@
     "currency": "Moeda",
     "currencyBRL": "Real (R$)",
     "currencyUSD": "Dólar (US$)",
-    "language": "Idioma",
+    "language": {
+      "title": "Idioma",
+      "device": "Seguir o dispositivo",
+      "ptBR": "Português (Brasil)",
+      "enUS": "English (US)",
+      "option": "Idioma: {{option}}"
+    },
     "about": "Sobre o app",
     "deleteAllData": "Apagar todos os dados",
     "deleteAllDataTitle": "Apagar todos os dados?",
