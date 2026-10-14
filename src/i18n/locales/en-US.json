@@ -66,10 +66,6 @@
       "error": "Could not delete. Please try again."
     }
   },
-  "priceHistory": {
-    "recentPrices": "Recent prices",
-    "useSuggestion": "Use recent price {{price}}"
-  },
   "validation": {
     "productEmpty": "Enter the product name",
     "priceEmpty": "Enter the price",

@@ -3,9 +3,7 @@ import { randomUUID } from 'expo-crypto';
 import { clearAllData as clearStorage } from './clear-all-data';
 import type { ComparisonRepository } from './comparison.repository';
 import { KeyValueComparisonRepository } from './kv-comparison.repository';
-import { KeyValuePriceHistoryRepository } from './kv-price-history.repository';
 import { KeyValueSettingsRepository } from './kv-settings.repository';
-import type { PriceHistoryRepository } from './price-history.repository';
 import type { SettingsRepository } from './settings.repository';
 import { MMKVStorage } from './storage/mmkv-storage';
 
@@ -22,14 +20,9 @@ export const comparisonRepository: ComparisonRepository = new KeyValueComparison
 
 export const settingsRepository: SettingsRepository = new KeyValueSettingsRepository(storage);
 
-export const priceHistoryRepository: PriceHistoryRepository = new KeyValuePriceHistoryRepository(
-  storage,
-);
-
 // "Apagar todos os dados" (S.1): one call wipes comparisons, history and settings together.
 export async function clearAllData(): Promise<void> {
   return clearStorage(storage);
 }
 
-export { recordPriceHistory, suggestPrices } from './price-history.suggestions';
-export type { ComparisonRepository, PriceHistoryRepository, SettingsRepository };
+export type { ComparisonRepository, SettingsRepository };
