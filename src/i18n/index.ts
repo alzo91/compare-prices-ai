@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import { useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-import type { Language } from '@/models/Settings';
+import type { Language, LanguagePreference } from '@/models/Settings';
 
 import enUS from './locales/en-US.json';
 import ptBR from './locales/pt-BR.json';
@@ -63,11 +63,25 @@ void i18n.use(initReactI18next).init({
   returnNull: false,
 });
 
-// Follows device language changes while the app runs (Android can change it without a restart).
-// Mounted once at the root layout. A user-chosen language (Settings, Epic 7) will override this.
-export function useDeviceLanguage(): void {
+// Language to show for the "Idioma" setting: a fixed choice wins; 'device' (or anything unknown,
+// e.g. older or corrupt stored data) follows the device locales.
+export function resolveActiveLanguage(
+  preference: LanguagePreference | undefined,
+  locales: Pick<Locale, 'languageCode'>[] = getLocales(),
+): Language {
+  if (preference && (SUPPORTED_LANGUAGES as readonly string[]).includes(preference)) {
+    return preference as Language;
+  }
+  return resolveLanguage(locales);
+}
+
+// Applies the "Idioma" preference; mounted once at the root layout. On 'device' it also follows
+// device language changes while the app runs (Android can change it without a restart).
+// i18n.changeLanguage re-renders every useTranslation() consumer, so screens, tab labels and
+// titles switch live, without a restart.
+export function useAppLanguage(preference: LanguagePreference): void {
   const locales = useLocales();
-  const language = resolveLanguage(locales);
+  const language = resolveActiveLanguage(preference, locales);
   useEffect(() => {
     setLanguage(language);
   }, [language]);

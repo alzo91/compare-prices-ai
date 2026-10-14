@@ -4,7 +4,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
-import { useDeviceLanguage } from '@/i18n';
+import { useAppLanguage } from '@/i18n';
+import { useLanguagePreference } from '@/store/useLanguagePreference';
 import { fontAssets } from '@/theme/fonts';
 import { light } from '@/theme/light';
 import { ThemeProvider } from '@/theme/useTheme';
@@ -12,7 +13,7 @@ import { ThemeProvider } from '@/theme/useTheme';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  useDeviceLanguage();
+  useAppLanguage(useLanguagePreference());
   const [fontsLoaded, fontError] = useFonts(fontAssets);
   useEffect(() => {
     if (fontsLoaded || fontError) SplashScreen.hideAsync();

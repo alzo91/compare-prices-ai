@@ -11,6 +11,7 @@ import { useFormat } from '@/i18n/format';
 import type { DisplayBasis } from '@/models/Settings';
 import { useTheme } from '@/theme/useTheme';
 
+import { LanguageSetting } from './language-setting';
 import { styles } from './settings.layout';
 
 const BASIS_OPTIONS = [
@@ -85,6 +86,7 @@ export function SettingsScene({
           />
         </View>
       </Card>
+      <LanguageSetting />
       <Pressable
         accessibilityRole="button"
         onPress={onOpenAbout}

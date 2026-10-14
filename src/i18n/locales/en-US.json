@@ -84,7 +84,13 @@
     "currency": "Currency",
     "currencyBRL": "Brazilian real (R$)",
     "currencyUSD": "US dollar ($)",
-    "language": "Language",
+    "language": {
+      "title": "Language",
+      "device": "Follow device",
+      "ptBR": "Português (Brasil)",
+      "enUS": "English (US)",
+      "option": "Language: {{option}}"
+    },
     "about": "About the app",
     "deleteAllData": "Delete all data",
     "deleteAllDataTitle": "Delete all data?",
