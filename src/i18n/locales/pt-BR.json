@@ -64,6 +64,13 @@
       "message": "“{{name}}” será removida da sua lista. Não é possível desfazer.",
       "confirm": "Apagar",
       "error": "Não foi possível apagar. Tente novamente."
+    },
+    "sheet": {
+      "winner": "Preço {{index}} é o mais barato",
+      "tie": "Empate: preços {{indexes}}",
+      "empty": "Preencha pelo menos 2 preços para ver o resultado",
+      "showDetails": "Mostra os detalhes do resultado",
+      "hideDetails": "Esconde os detalhes do resultado"
     }
   },
   "priceHistory": {

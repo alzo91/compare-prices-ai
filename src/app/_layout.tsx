@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { useAppLanguage } from '@/i18n';
 import { useLanguagePreference } from '@/store/useLanguagePreference';
@@ -21,19 +22,22 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) return null;
 
   return (
-    <ThemeProvider>
-      <StatusBar style="dark" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: light.colors.background },
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="new-compare-prices" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="compare/[id]" />
-        <Stack.Screen name="about" />
-      </Stack>
-    </ThemeProvider>
+    // Gesture root for the result sheet (@gorhom/bottom-sheet) on the comparison screens.
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <StatusBar style="dark" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: light.colors.background },
+          }}
+        >
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="new-compare-prices" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="compare/[id]" />
+          <Stack.Screen name="about" />
+        </Stack>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

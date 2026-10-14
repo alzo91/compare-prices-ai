@@ -64,6 +64,13 @@
       "message": "“{{name}}” will be removed from your list. This cannot be undone.",
       "confirm": "Delete",
       "error": "Could not delete. Please try again."
+    },
+    "sheet": {
+      "winner": "Price {{index}} is the cheapest",
+      "tie": "Tie: prices {{indexes}}",
+      "empty": "Fill in at least 2 prices to see the result",
+      "showDetails": "Shows the result details",
+      "hideDetails": "Hides the result details"
     }
   },
   "priceHistory": {
