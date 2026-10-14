@@ -14,6 +14,15 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 16,
   },
+  search: {
+    marginBottom: 16,
+  },
+  noResults: {
+    alignItems: 'center',
+    paddingTop: 48,
+    paddingHorizontal: 24,
+    gap: 12,
+  },
   separator: {
     height: 12,
   },
