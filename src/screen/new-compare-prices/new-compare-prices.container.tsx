@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { comparisonRepository } from '@/business/repository';
 
@@ -27,6 +28,7 @@ import {
   updateRow,
 } from './new-compare-prices.form';
 import { ComparisonLoadStatus } from './comparison-load-status';
+import { confirmDeleteComparison } from './new-compare-prices.delete';
 import { buildResultCard } from './new-compare-prices.result';
 import { numberErrorKey, productNameErrorKey, unitErrorKey } from './new-compare-prices.messages';
 import { NewComparePricesScene } from './new-compare-prices.scene';
@@ -114,6 +116,29 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
     }
   };
 
+  // Delete (task 6.2): confirm, remove from storage, back to Home (it reloads on focus).
+  const [deleting, setDeleting] = useState(false);
+  const [deleteFailed, setDeleteFailed] = useState(false);
+  const onDelete = () => {
+    if (!comparisonId || deleting) return;
+    confirmDeleteComparison(
+      Alert.alert,
+      (key, options) => t(key as never, options),
+      productName,
+      async () => {
+        setDeleting(true);
+        setDeleteFailed(false);
+        try {
+          await comparisonRepository.remove(comparisonId);
+          router.back();
+        } catch {
+          setDeleteFailed(true);
+          setDeleting(false);
+        }
+      },
+    );
+  };
+
   if (loadState !== 'ready') {
     return <ComparisonLoadStatus title={title} state={loadState} onClose={() => router.back()} />;
   }
@@ -125,9 +150,11 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       rows={rows}
       currencySymbol={CURRENCY_SYMBOL[language]}
       result={result}
-      isValid={isValid && !saving}
+      isValid={isValid && !saving && !deleting}
       saveError={saveFailed ? t('newComparison.saveError') : undefined}
       onSave={onSave}
+      onDelete={comparisonId ? onDelete : undefined}
+      deleteError={deleteFailed ? t('newComparison.delete.error') : undefined}
       productNameError={nameReason && t(productNameErrorKey(nameReason))}
       mixedUnits={hasMixedMeasurementTypes(rows)}
       onBlurProductName={() => setTouched((s) => touch(s, NAME_KEY))}
