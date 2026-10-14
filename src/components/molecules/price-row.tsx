@@ -37,12 +37,7 @@ export type PriceRowProps = {
   onBlurQuantity?: () => void;
   // When set, a remove control is shown in the card header (rows 3+, task 4.3).
   onRemove?: () => void;
-  // Recent prices for this product + unit (S.2), shown as chips while the price field is empty.
-  // `label` is the formatted price ("R$ 4,59"); tapping a chip types `value` into the field.
-  priceSuggestions?: readonly PriceSuggestion[];
 };
-
-export type PriceSuggestion = { label: string; value: string };
 
 // One price entry: price + quantity fields and a single-select unit pill row.
 // The screen repeats this component once per price (task 4.3).
@@ -61,7 +56,6 @@ export function PriceRow({
   onBlurPrice,
   onBlurQuantity,
   onRemove,
-  priceSuggestions,
 }: PriceRowProps) {
   const { colors, palette } = useTheme();
   const { t } = useI18n();
@@ -131,30 +125,6 @@ export function PriceRow({
         </View>
       </View>
       {errors?.price ? <FieldError message={errors.price} /> : null}
-      {price === '' && priceSuggestions && priceSuggestions.length > 0 ? (
-        <View style={styles.suggestions}>
-          <Text variant="caption" color="textMuted">
-            {t('priceHistory.recentPrices')}
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-          >
-            <View style={styles.pills}>
-              {priceSuggestions.map((suggestion) => (
-                <Pill
-                  key={suggestion.value}
-                  label={suggestion.label}
-                  tone={highlight ? 'accent2' : 'accent'}
-                  onPress={() => onChangePrice(suggestion.value)}
-                  accessibilityLabel={t('priceHistory.useSuggestion', { price: suggestion.label })}
-                />
-              ))}
-            </View>
-          </ScrollView>
-        </View>
-      ) : null}
       {errors?.quantity ? <FieldError message={errors.quantity} /> : null}
       <ScrollView
         horizontal
@@ -207,5 +177,4 @@ const styles = StyleSheet.create({
   prefix: { fontSize: 17 },
   input: { flex: 1, fontFamily: fontFamily.display, fontSize: 20, padding: 0 },
   pills: { flexDirection: 'row', gap: 8 },
-  suggestions: { gap: 8 },
 });
