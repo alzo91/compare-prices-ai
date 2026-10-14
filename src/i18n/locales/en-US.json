@@ -88,9 +88,12 @@
     "keepPriceHistoryHint": "Stores prices you've already entered",
     "roundCents": "Round cents",
     "roundCentsHint": "Shows {{rounded}} instead of {{exact}}",
-    "currency": "Currency",
-    "currencyBRL": "Brazilian real (R$)",
-    "currencyUSD": "US dollar ($)",
+    "currency": {
+      "label": "Currency",
+      "BRL": "Brazilian real (R$)",
+      "USD": "US dollar ($)",
+      "EUR": "Euro (€)"
+    },
     "language": {
       "title": "Language",
       "device": "Follow device",

@@ -38,12 +38,10 @@ type NewComparePricesContainerProps = {
   comparisonId?: string;
 };
 
-const CURRENCY_SYMBOL = { 'pt-BR': 'R$', 'en-US': '$' } as const;
-
 // Container: form state and saving through the repository.
 export function NewComparePricesContainer({ comparisonId }: NewComparePricesContainerProps) {
   const { t } = useI18n();
-  const { language } = useFormat();
+  const { language, currencySymbol } = useFormat();
   const basis = useDisplayBasis();
   const roundCents = useRoundCents();
   const title = comparisonId ? t('newComparison.editTitle') : t('newComparison.title');
@@ -148,7 +146,7 @@ export function NewComparePricesContainer({ comparisonId }: NewComparePricesCont
       title={title}
       productName={productName}
       rows={rows}
-      currencySymbol={CURRENCY_SYMBOL[language]}
+      currencySymbol={currencySymbol}
       result={result}
       isValid={isValid && !saving && !deleting}
       saveError={saveFailed ? t('newComparison.saveError') : undefined}

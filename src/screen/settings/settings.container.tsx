@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 
 import { clearAllData } from '@/business/repository';
 import { useI18n } from '@/i18n';
+import { currencyStore } from '@/store/useCurrency';
 import { displayBasisStore, useDisplayBasis } from '@/store/useDisplayBasis';
 import { languageStore } from '@/store/useLanguagePreference';
 import { roundCentsStore, useRoundCents } from '@/store/useRoundCents';
@@ -24,7 +25,12 @@ export function SettingsContainer() {
         onPress: () => {
           // Wiping resets settings in storage; bring the in-memory copy back to the defaults.
           void clearAllData().then(() =>
-            Promise.all([displayBasisStore.load(), roundCentsStore.load(), languageStore.load()]),
+            Promise.all([
+              displayBasisStore.load(),
+              roundCentsStore.load(),
+              languageStore.load(),
+              currencyStore.load(),
+            ]),
           );
         },
       },

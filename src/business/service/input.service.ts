@@ -93,7 +93,9 @@ export function parseQuantity(input: string | null | undefined, language: Langua
 
 /** Price field to cents (PriceEntry.priceCents): "R$ 24,90" → 2490. Currency symbols are ignored. */
 export function parsePriceCents(input: string | null | undefined, language: Language): ParseResult {
-  const result = parsePositiveNumber((input ?? '').replace(/R\$|\$/g, ''), language);
+  // Symbols of every supported currency (R$, US$, $, €) and their codes (BRL, USD, EUR).
+  const text = (input ?? '').replace(/R\$|US\$|\$|€|\b(?:BRL|USD|EUR)\b/gi, '');
+  const result = parsePositiveNumber(text, language);
   if (!result.ok) return result;
   const cents = Math.round(result.value * 100);
   // Below half a cent the price rounds to nothing, so it counts as zero.

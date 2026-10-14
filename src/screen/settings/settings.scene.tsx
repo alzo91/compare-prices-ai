@@ -11,6 +11,7 @@ import { useFormat } from '@/i18n/format';
 import type { DisplayBasis } from '@/models/Settings';
 import { useTheme } from '@/theme/useTheme';
 
+import { CurrencySetting } from './currency-setting';
 import { LanguageSetting } from './language-setting';
 import { styles } from './settings.layout';
 
@@ -86,6 +87,7 @@ export function SettingsScene({
           />
         </View>
       </Card>
+      <CurrencySetting />
       <LanguageSetting />
       <Pressable
         accessibilityRole="button"
