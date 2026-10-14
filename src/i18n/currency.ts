@@ -38,7 +38,12 @@ export function formatMoney(
 }
 
 // Symbol shown in the price field: "R$", "US$" (pt-BR) / "$" (en-US), "€".
+// Hermes on iOS has no NumberFormat.formatToParts, so strip the number out of format(0) instead.
 export function currencySymbol(currency: Currency, language: Language): string {
-  const parts = numberFormatter(language, { style: 'currency', currency }).formatToParts(0);
-  return parts.find((part) => part.type === 'currency')?.value ?? currency;
+  const formatted = numberFormatter(language, {
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  }).format(0);
+  return formatted.replace(/[\d\s.,]/g, '') || currency;
 }
